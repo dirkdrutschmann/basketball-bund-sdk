@@ -15,13 +15,13 @@ describe('HttpClient', () => {
 
   describe('buildUrl', () => {
     test('should build correct URL without params', () => {
-      // @ts-ignore - accessing private method for testing
+      // @ts-expect-error - accessing private method for testing
       const url = httpClient.buildUrl('/test');
       expect(url).toBe('https://api.example.com/test');
     });
 
     test('should build correct URL with params', () => {
-      // @ts-ignore - accessing private method for testing
+      // @ts-expect-error - accessing private method for testing
       const url = httpClient.buildUrl('/test', { param1: 'value1', param2: 'value2' });
       expect(url).toBe('https://api.example.com/test?param1=value1&param2=value2');
     });
@@ -33,7 +33,7 @@ describe('HttpClient', () => {
         headers: {}
       });
       
-      // @ts-ignore - accessing private method for testing
+      // @ts-expect-error - accessing private method for testing
       const url = clientWithTrailingSlash.buildUrl('/test');
       expect(url).toBe('https://api.example.com/test');
     });

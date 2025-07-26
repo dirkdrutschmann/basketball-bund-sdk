@@ -95,9 +95,8 @@ export class AuthenticationService {
     try {
       // Prüfe den /user/lc Endpoint um zu sehen ob der Benutzer wirklich eingeloggt ist
       const userContext = await this.httpClient.get('/user/lc');
-      
       // Wenn der Response einen Username enthält, ist der Benutzer eingeloggt
-      return userContext && userContext.username && userContext.isLoggedIn === true;
+      return userContext && userContext.loginName
     } catch (error) {
       // Bei einem Fehler ist der Benutzer nicht eingeloggt
       return false;

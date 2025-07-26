@@ -24,9 +24,9 @@ console.log(clubs);
 
 ### CommonJS (Node.js)
 ```javascript
-const BasketballBundSDK = require('basketball-bund-sdk').default;
+const { default: BasketballBundSDK } = require('basketball-bund-sdk/dist/index.cjs');
 
-// Initialisierung des SDK
+// Initialisierung des SDK  
 const sdk = new BasketballBundSDK();
 
 // Beispiel: Spielplan einer Liga abrufen

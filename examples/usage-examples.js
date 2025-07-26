@@ -1,8 +1,5 @@
-// CommonJS Import (Node.js)
-const BasketballBundSDK = require('basketball-bund-sdk').default;
-
-// ES6 Module Import
-// import BasketballBundSDK from 'basketball-bund-sdk';
+// CommonJS Import (Node.js mit .cjs-Dateien)
+const { default: BasketballBundSDK } = require('basketball-bund-sdk/dist/index.cjs');
 
 async function exampleUsage() {
   // SDK initialisieren

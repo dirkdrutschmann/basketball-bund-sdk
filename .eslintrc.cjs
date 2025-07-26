@@ -37,6 +37,6 @@ module.exports = {
     'examples/',
     '*.js',
     '!.eslintrc.js',
-    '!jest.config.js'
+    '!jest.config.mjs'
   ],
 }; 

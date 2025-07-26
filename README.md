@@ -5,7 +5,7 @@ Ein TypeScript/JavaScript SDK für die Basketball-Bund.net REST API.
 ## Installation
 
 ```bash
-npm install basketball-bund-sdk
+npm install github.com:dirkdrutschmann/basketballbundsdk
 ```
 
 ## Schnellstart

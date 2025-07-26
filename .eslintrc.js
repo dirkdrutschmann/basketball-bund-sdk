@@ -34,6 +34,7 @@ module.exports = {
     'dist/',
     'node_modules/',
     'coverage/',
+    'examples/',
     '*.js',
     '!.eslintrc.js',
     '!jest.config.js'

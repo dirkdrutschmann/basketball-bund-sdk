@@ -10,7 +10,8 @@ npm install github.com:dirkdrutschmann/basketballbundsdk
 
 ## Schnellstart
 
-```typescript
+### ES6 Modules (empfohlen)
+```javascript
 import BasketballBundSDK from 'basketball-bund-sdk';
 
 // Initialisierung des SDK
@@ -19,10 +20,27 @@ const sdk = new BasketballBundSDK();
 // Beispiel: Vereine suchen
 const clubs = await sdk.club.getClubsByFreetext('München');
 console.log(clubs);
+```
+
+### CommonJS (Node.js)
+```javascript
+const BasketballBundSDK = require('basketball-bund-sdk').default;
+
+// Initialisierung des SDK
+const sdk = new BasketballBundSDK();
 
 // Beispiel: Spielplan einer Liga abrufen
 const competition = await sdk.competition.getSpielplan(12345);
 console.log(competition);
+```
+
+### TypeScript
+```typescript
+import BasketballBundSDK from 'basketball-bund-sdk';
+import type { ClubModel, MatchModel } from 'basketball-bund-sdk';
+
+const sdk = new BasketballBundSDK();
+const clubs: ClubModel[] = await sdk.club.getClubsByFreetext('München');
 ```
 
 ## Konfiguration
@@ -363,4 +381,11 @@ Beiträge sind willkommen! Bitte erstellen Sie ein Issue oder einen Pull Request
 
 ## Support
 
-Bei Fragen oder Problemen erstellen Sie bitte ein Issue im [GitHub Repository](https://github.com/yourusername/basketball-bund-sdk/issues). 
+Bei Fragen oder Problemen erstellen Sie bitte ein Issue im [GitHub Repository](https://github.com/ddrutschmann/basketball-bund-sdk/issues).
+
+## Autor
+
+**Dirk Drutschmann**
+- Website: [https://drutschmann.dev](https://drutschmann.dev)
+- E-Mail: mail@drutschmann.dev
+- GitHub: [@ddrutschmann](https://github.com/ddrutschmann) 

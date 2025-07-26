@@ -24,7 +24,7 @@ console.log(clubs);
 
 ### CommonJS (Node.js)
 ```javascript
-const { default: BasketballBundSDK } = require('basketball-bund-sdk/dist/index.cjs');
+const { default: BasketballBundSDK } = require('basketball-bund-sdk/cjs');
 
 // Initialisierung des SDK  
 const sdk = new BasketballBundSDK();
@@ -34,13 +34,58 @@ const competition = await sdk.competition.getSpielplan(12345);
 console.log(competition);
 ```
 
-### TypeScript
+### TypeScript (mit vollständiger Typisierung)
 ```typescript
 import BasketballBundSDK from 'basketball-bund-sdk';
-import type { ClubModel, MatchModel } from 'basketball-bund-sdk';
 
-const sdk = new BasketballBundSDK();
-const clubs: ClubModel[] = await sdk.club.getClubsByFreetext('München');
+// SDK mit TypeScript-Typen konfigurieren
+const sdk = new BasketballBundSDK({
+  baseUrl: 'https://api.basketball-bund.net',
+  timeout: 10000
+});
+
+// Beispiel: Captcha generieren
+const captcha = await sdk.captcha.generate();
+console.log(captcha);
+
+// Beispiel: Vereine suchen
+const clubs = await sdk.club.getClubsByFreetext('Berlin');
+console.log(clubs);
+
+// Beispiel: Benutzer-Kontext abrufen
+const userContext = await sdk.user.getLoginContext();
+console.log(userContext);
+```
+
+### 🔐 Authentifizierung
+```typescript
+import BasketballBundSDK from 'basketball-bund-sdk';
+
+// SDK mit Authentifizierung initialisieren
+const sdk = new BasketballBundSDK({
+  baseUrl: 'https://www.basketball-bund.net',
+  timeout: 10000
+});
+
+// Login durchführen
+const loginResult = await sdk.auth.login({
+  username: 'your_username',
+  password: 'your_password'
+});
+
+if (loginResult.success) {
+  console.log('✅ Authentifiziert!');
+  console.log('🍪 Session Cookie:', loginResult.sessionCookie);
+  
+  // Jetzt sind alle API-Calls authentifiziert
+  const userContext = await sdk.user.getLoginContext();
+  console.log('👤 Benutzer:', userContext);
+} else {
+  console.log('❌ Login fehlgeschlagen:', loginResult.error);
+}
+
+// Logout
+await sdk.auth.logout();
 ```
 
 ## Konfiguration
@@ -62,6 +107,24 @@ const sdk = new BasketballBundSDK({
 ## Services
 
 Das SDK ist in verschiedene Services unterteilt:
+
+### 🔐 AuthenticationService
+
+Authentifizierung und Session-Management:
+
+```typescript
+// Login durchführen
+const loginResult = await sdk.auth.login({
+  username: 'your_username',
+  password: 'your_password'
+});
+
+// Authentifizierungsstatus prüfen
+const isAuthenticated = sdk.auth.isAuthenticated();
+
+// Logout durchführen
+await sdk.auth.logout();
+```
 
 ### 🏀 ClubService
 

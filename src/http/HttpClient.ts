@@ -33,6 +33,10 @@ export class HttpClient {
     this.config.headers = { ...this.config.headers, ...headers };
   }
 
+  getHeaders(): Record<string, string> {
+    return this.config.headers;
+  }
+
   setBaseUrl(baseUrl: string): void {
     this.config.baseUrl = baseUrl;
   }

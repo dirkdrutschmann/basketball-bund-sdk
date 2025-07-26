@@ -91,8 +91,16 @@ export class AuthenticationService {
     }
   }
 
-  isAuthenticated(): boolean {
-    const headers = this.httpClient.getHeaders();
-    return headers.Cookie?.includes('SESSION=') || false;
+  async isAuthenticated(): Promise<boolean> {
+    try {
+      // Prüfe den /user/lc Endpoint um zu sehen ob der Benutzer wirklich eingeloggt ist
+      const userContext = await this.httpClient.get('/user/lc');
+      
+      // Wenn der Response einen Username enthält, ist der Benutzer eingeloggt
+      return userContext && userContext.username && userContext.isLoggedIn === true;
+    } catch (error) {
+      // Bei einem Fehler ist der Benutzer nicht eingeloggt
+      return false;
+    }
   }
 } 

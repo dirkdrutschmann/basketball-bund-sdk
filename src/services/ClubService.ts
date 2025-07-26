@@ -3,14 +3,13 @@ import {
   SearchClubMetadata, 
   SearchClubResponseData,
   ClubModel,
-  ClubMatches,
-  Response
+  ClubMatches
 } from '../types';
 
 export class ClubService {
   constructor(private httpClient: HttpClient) {}
 
-  async getSearchClubMetadata(): Promise<Response<SearchClubMetadata>> {
+  async getSearchClubMetadata(): Promise<SearchClubMetadata> {
     const response = await this.httpClient.get('/club/searchMetadata');
     return response;
   }
@@ -22,21 +21,21 @@ export class ClubService {
     plz: string;
     startAtIndex: number;
     umkreis: number;
-  }): Promise<Response<SearchClubResponseData>> {
+  }): Promise<SearchClubResponseData> {
     const response = await this.httpClient.post('/club/search', params);
     return response;
   }
 
   async getClubsByFreetext(params: {
     freetext: string;
-  }): Promise<Response<ClubModel[]>> {
+  }): Promise<ClubModel[]> {
     const response = await this.httpClient.get('/club/freetext', params);
     return response;
   }
 
   async getFeedBasedClubsByFreetext(params: {
     freetext: string;
-  }): Promise<Response<ClubModel[]>> {
+  }): Promise<ClubModel[]> {
     const response = await this.httpClient.get('/club/fee-based-clubs/freetext', params);
     return response;
   }
@@ -45,7 +44,7 @@ export class ClubService {
     clubId: number;
     justHome?: boolean;
     rangeDays?: number;
-  }): Promise<Response<ClubMatches>> {
+  }): Promise<ClubMatches> {
     const { clubId, ...queryParams } = params;
     const response = await this.httpClient.get(`/club/id/${clubId}/actualmatches`, queryParams);
     return response;

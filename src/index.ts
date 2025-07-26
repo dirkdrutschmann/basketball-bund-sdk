@@ -74,6 +74,10 @@ export class BasketballBundSDK {
     }
   }
 
+  async isAuthenticated(): Promise<boolean> {
+    return this.auth.isAuthenticated();
+  }
+
   setHeaders(headers: Record<string, string>): void {
     this.httpClient.setHeaders(headers);
   }

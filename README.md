@@ -111,48 +111,84 @@ if (loginResult.success) {
 await sdk.auth.logout();
 ```
 
-## 📋 Response-Typen
+## 📋 Direkte Daten-Rückgabe
 
-Alle API-Calls geben ein `Response<T>` Objekt zurück:
+Alle API-Calls geben direkt die Daten zurück, nicht in einem Response-Wrapper:
 
 ```typescript
-interface Response<T> {
-  data?: T;           // Die eigentlichen Daten
-  success?: boolean;  // Erfolg/Fehler-Status
-  errors?: string[];  // Fehlermeldungen
-  warnings?: string[]; // Warnungen
+// Captcha Service - Direkte Captcha-Daten
+const captcha = await sdk.captcha.generate();
+console.log(captcha.captchaCode);
+
+// Club Service - Direkte Club-Array-Daten
+const clubs = await sdk.club.getClubsByFreetext({ freetext: 'Berlin' });
+console.log(clubs.length);
+
+// Match Service - Direkte Match-Daten
+const matchInfo = await sdk.match.getMatchInfo({ matchId: 12345 });
+console.log(matchInfo.homeTeam.name);
+```
+
+### 🔍 API Response-Struktur
+
+Die Basketball-Bund API gibt folgende Struktur zurück:
+
+```json
+{
+  "appContext": "",
+  "data": {},
+  "dateFormat": "",
+  "message": "",
+  "serverInstance": "",
+  "status": "",
+  "timeFormat": "",
+  "timeFormatShort": "",
+  "timestamp": "",
+  "username": "",
+  "version": ""
 }
 ```
 
-### Beispiel für Response-Typen:
+**Unser SDK extrahiert automatisch die `data`-Property**, sodass Sie direkt auf die eigentlichen Daten zugreifen können:
 
 ```typescript
-// Captcha Service - Response<Captcha>
-const captchaResponse = await sdk.captcha.generate();
-if (captchaResponse.success && captchaResponse.data) {
-  console.log('Captcha Code:', captchaResponse.data.captchaCode);
-}
+const wamData = await sdk.wam.getLigaList(params);
+// wamData enthält direkt die inneren Daten
+console.log(wamData.ligen); // Direkter Zugriff auf die eigentlichen Daten
+```
 
-// Club Service - Response<ClubModel[]>
-const clubsResponse = await sdk.club.getClubsByFreetext({
+### Beispiel für direkte Daten-Rückgabe:
+
+```typescript
+// Captcha Service - Direkte Captcha-Daten
+const captcha = await sdk.captcha.generate();
+console.log('Captcha Code:', captcha.captchaCode);
+
+// Club Service - Direkte Club-Array-Daten
+const clubs = await sdk.club.getClubsByFreetext({
   freetext: 'Berlin'
 });
-if (clubsResponse.success && clubsResponse.data) {
-  console.log('Anzahl Vereine:', clubsResponse.data.length);
-}
+console.log('Anzahl Vereine:', clubs.length);
 
-// Match Service - Response<MatchModel>
-const matchResponse = await sdk.match.getMatchInfo({
+// Match Service - Direkte Match-Daten
+const matchInfo = await sdk.match.getMatchInfo({
   matchId: 12345
 });
-if (matchResponse.success && matchResponse.data) {
-  console.log('Home Team:', matchResponse.data.homeTeam.name);
-}
+console.log('Home Team:', matchInfo.homeTeam.name);
 
-// Fehlerbehandlung
-if (!matchResponse.success) {
-  console.error('Fehler:', matchResponse.errors);
-}
+// WAM Service - Direkte WAM-Daten
+const wamData = await sdk.wam.getLigaList({
+  akgGeschlechtIds: [],
+  altersklasseIds: [],
+  gebietIds: [],
+  ligatypIds: [],
+  sortBy: 0,
+  spielklasseIds: [],
+  token: "",
+  verbandIds: [3],
+  startAtIndex: 0
+});
+console.log('Anzahl Ligen:', wamData.ligen?.length || 0);
 ```
 
 ## Konfiguration
@@ -186,8 +222,8 @@ const loginResult = await sdk.auth.login({
   password: 'your_password'
 });
 
-// Authentifizierungsstatus prüfen
-const isAuthenticated = sdk.auth.isAuthenticated();
+// Authentifizierungsstatus prüfen (asynchron)
+const isAuthenticated = await sdk.isAuthenticated();
 
 // 🍪 Nach Login verwenden ALLE API-Calls automatisch die SESSION-Cookie
 if (loginResult.success) {
@@ -199,6 +235,29 @@ if (loginResult.success) {
 // Logout durchführen
 await sdk.auth.logout();
 ```
+
+### 🔍 Asynchrone Authentifizierungsprüfung
+
+Die `isAuthenticated()` Methode prüft jetzt den `/user/lc` Endpoint, um den echten Login-Status zu ermitteln:
+
+```typescript
+// Authentifizierungsstatus prüfen (asynchron)
+const isAuthenticated = await sdk.isAuthenticated();
+
+if (isAuthenticated) {
+  console.log('Benutzer ist eingeloggt');
+  const userContext = await sdk.user.getLoginContext();
+  console.log('Willkommen,', userContext.username);
+} else {
+  console.log('Benutzer ist nicht eingeloggt');
+}
+```
+
+**Vorteile:**
+- ✅ Echte API-Prüfung statt nur Cookie-Prüfung
+- ✅ Zuverlässigere Authentifizierungsprüfung
+- ✅ Erkennt abgelaufene Sessions
+- ✅ Prüft ob Benutzer wirklich eingeloggt ist
 
 ### 🏀 ClubService
 

@@ -1,5 +1,5 @@
 import { HttpClient } from '../http/HttpClient';
-import { LigaList, WamResponseData, Response } from '../types';
+import { LigaList, WamResponseData } from '../types';
 
 export class WamService {
   constructor(private httpClient: HttpClient) {}
@@ -14,7 +14,7 @@ export class WamService {
     token: string;
     verbandIds: number[];
     startAtIndex?: number;
-  }): Promise<Response<LigaList>> {
+  }): Promise<LigaList> {
     const { startAtIndex, ...wamParams } = params;
     const requestParams: any = {};
     if (startAtIndex !== undefined) requestParams.startAtIndex = startAtIndex;
@@ -32,7 +32,7 @@ export class WamService {
     spielklasseIds: number[];
     token: string;
     verbandIds: number[];
-  }): Promise<Response<WamResponseData>> {
+  }): Promise<WamResponseData> {
     const response = await this.httpClient.post('/wam/data', params);
     return response;
   }

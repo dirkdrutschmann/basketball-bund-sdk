@@ -41,19 +41,19 @@ export class HttpClient {
     this.config.baseUrl = baseUrl;
   }
 
-  async get<T = any>(path: string, params?: Record<string, any>): Promise<HttpResponse<T>> {
+  async get<T = any>(path: string, params?: Record<string, any>): Promise<T> {
     return this.request<T>('GET', path, undefined, params);
   }
 
-  async post<T = any>(path: string, data?: any, params?: Record<string, any>): Promise<HttpResponse<T>> {
+  async post<T = any>(path: string, data?: any, params?: Record<string, any>): Promise<T> {
     return this.request<T>('POST', path, data, params);
   }
 
-  async put<T = any>(path: string, data?: any, params?: Record<string, any>): Promise<HttpResponse<T>> {
+  async put<T = any>(path: string, data?: any, params?: Record<string, any>): Promise<T> {
     return this.request<T>('PUT', path, data, params);
   }
 
-  async delete<T = any>(path: string, params?: Record<string, any>): Promise<HttpResponse<T>> {
+  async delete<T = any>(path: string, params?: Record<string, any>): Promise<T> {
     return this.request<T>('DELETE', path, undefined, params);
   }
 
@@ -62,7 +62,7 @@ export class HttpClient {
     path: string,
     data?: any,
     params?: Record<string, any>
-  ): Promise<HttpResponse<T>> {
+  ): Promise<T> {
     try {
       const url = this.buildUrl(path, params);
       
@@ -107,12 +107,16 @@ export class HttpClient {
         );
       }
 
-      return {
-        data: responseData,
-        status: response.status,
-        statusText: response.statusText,
-        headers: responseHeaders
-      };
+      // Die API gibt eine Response-Struktur zurück: { data: {}, status: "", ... }
+      // Wir extrahieren nur die data-Property
+      let finalData: T;
+      if (responseData && typeof responseData === 'object' && 'data' in responseData) {
+        finalData = responseData.data as T;
+      } else {
+        finalData = responseData;
+      }
+
+      return finalData;
     } catch (error) {
       if (error instanceof BasketballBundAPIError) {
         throw error;

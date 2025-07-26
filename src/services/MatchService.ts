@@ -1,31 +1,47 @@
 import { HttpClient } from '../http/HttpClient';
-import { MatchModel, SearchMatchFilter, SearchMatchResponseData } from '../types';
+import { MatchModel, SearchMatchResponseData, Response } from '../types';
 
 export class MatchService {
   constructor(private httpClient: HttpClient) {}
 
-  async getMatchInfo(matchId: number): Promise<MatchModel> {
-    const response = await this.httpClient.get(`/match/id/${matchId}/matchInfo`);
-    return response.data;
+  async getMatchInfo(params: {
+    matchId: number;
+  }): Promise<Response<MatchModel>> {
+    const response = await this.httpClient.get(`/match/id/${params.matchId}/matchInfo`);
+    return response;
   }
 
-  async getMatchById(matchId: number): Promise<MatchModel> {
-    const response = await this.httpClient.get(`/match/id/${matchId}`);
-    return response.data;
+  async getMatchById(params: {
+    matchId: number;
+  }): Promise<Response<MatchModel>> {
+    const response = await this.httpClient.get(`/match/id/${params.matchId}`);
+    return response;
   }
 
-  async getBoxscore(matchId: number): Promise<MatchModel> {
-    const response = await this.httpClient.get(`/match/id/${matchId}/boxscore`);
-    return response.data;
+  async getBoxscore(params: {
+    matchId: number;
+  }): Promise<Response<MatchModel>> {
+    const response = await this.httpClient.get(`/match/id/${params.matchId}/boxscore`);
+    return response;
   }
 
-  async getPlayByPlayReport(matchId: number): Promise<MatchModel> {
-    const response = await this.httpClient.get(`/match/id/${matchId}/playbyplay`);
-    return response.data;
+  async getPlayByPlayReport(params: {
+    matchId: number;
+  }): Promise<Response<MatchModel>> {
+    const response = await this.httpClient.get(`/match/id/${params.matchId}/playbyplay`);
+    return response;
   }
 
-  async searchMatches(filter: SearchMatchFilter): Promise<SearchMatchResponseData> {
-    const response = await this.httpClient.post('/match/search', filter);
-    return response.data;
+  async searchMatches(params: {
+    akGruppeIdList: number[];
+    fromDate: Date | string;
+    gIdList: number[];
+    spielfeldPlz: string;
+    spielfeldUmkreis: number;
+    startAtIndex: number;
+    toDate: Date | string;
+  }): Promise<Response<SearchMatchResponseData>> {
+    const response = await this.httpClient.post('/match/search', params);
+    return response;
   }
 } 

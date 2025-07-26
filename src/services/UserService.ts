@@ -1,26 +1,26 @@
 import { HttpClient } from '../http/HttpClient';
-import { LoginModel } from '../types';
+import { LoginModel, Response } from '../types';
 
 export class UserService {
   constructor(private httpClient: HttpClient) {}
 
-  async getLoginContext(): Promise<LoginModel> {
+  async getLoginContext(): Promise<Response<LoginModel>> {
     const response = await this.httpClient.get('/user/lc');
-    return response.data;
+    return response;
   }
 
-  async isDBBGeschaeftsstelle(): Promise<boolean> {
+  async isDBBGeschaeftsstelle(): Promise<Response<boolean>> {
     const response = await this.httpClient.get('/user/is-dbbgeschaeftsstelle');
-    return response.data;
+    return response;
   }
 
-  async isGeschaeftsstelle(): Promise<boolean> {
+  async isGeschaeftsstelle(): Promise<Response<boolean>> {
     const response = await this.httpClient.get('/user/is-geschaeftsstelle');
-    return response.data;
+    return response;
   }
 
-  async getGeschaeftsstelleFor(): Promise<number[]> {
+  async getGeschaeftsstelleFor(): Promise<Response<number[]>> {
     const response = await this.httpClient.get('/user/geschaeftsstellefor');
-    return response.data;
+    return response;
   }
 } 

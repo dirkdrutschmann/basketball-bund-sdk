@@ -5,7 +5,8 @@ import {
   PlayerRegistrationStep2Form,
   InvitationForm,
   InvitationSelfForm,
-  InvitationReactivateForm
+  InvitationReactivateForm,
+  Response
 } from '../types';
 
 export class RegistrationService {
@@ -15,9 +16,13 @@ export class RegistrationService {
     await this.httpClient.get(`/register-player/disp/${data}/${keyId}/${signature}`);
   }
 
-  async getRegistrationInfo(data: string, keyId: number, signature: string): Promise<ValidableResponse<PlayerRegistrationStep2Form>> {
-    const response = await this.httpClient.get(`/register-player/info/${data}/${keyId}/${signature}`);
-    return response.data;
+  async getRegistrationInfo(params: {
+    type: string;
+    registrationId: number;
+    signature: string;
+  }): Promise<Response<ValidableResponse<PlayerRegistrationStep2Form>>> {
+    const response = await this.httpClient.get(`/register-player/info/${params.type}/${params.registrationId}/${params.signature}`);
+    return response;
   }
 
   async registerPlayerStep2Init(data: string, keyId: number, signature: string): Promise<ValidableResponse<PlayerRegistrationStep2Form>> {

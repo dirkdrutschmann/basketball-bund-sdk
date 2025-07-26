@@ -1,45 +1,53 @@
 import { HttpClient } from '../http/HttpClient';
 import { 
   SearchClubMetadata, 
-  SearchClubFilter, 
   SearchClubResponseData,
   ClubModel,
-  ClubMatches
+  ClubMatches,
+  Response
 } from '../types';
 
 export class ClubService {
   constructor(private httpClient: HttpClient) {}
 
-  async getSearchClubMetadata(): Promise<SearchClubMetadata> {
+  async getSearchClubMetadata(): Promise<Response<SearchClubMetadata>> {
     const response = await this.httpClient.get('/club/searchMetadata');
-    return response.data;
+    return response;
   }
 
-  async searchClubs(filter: SearchClubFilter): Promise<SearchClubResponseData> {
-    const response = await this.httpClient.post('/club/search', filter);
-    return response.data;
+  async searchClubs(params: {
+    akjIdList: number[];
+    eIdList: number[];
+    gIdList: number[];
+    plz: string;
+    startAtIndex: number;
+    umkreis: number;
+  }): Promise<Response<SearchClubResponseData>> {
+    const response = await this.httpClient.post('/club/search', params);
+    return response;
   }
 
-  async getClubsByFreetext(freetext?: string): Promise<ClubModel[]> {
-    const response = await this.httpClient.get('/club/freetext', { freetext });
-    return response.data;
+  async getClubsByFreetext(params: {
+    freetext: string;
+  }): Promise<Response<ClubModel[]>> {
+    const response = await this.httpClient.get('/club/freetext', params);
+    return response;
   }
 
-  async getFeedBasedClubsByFreetext(freetext?: string): Promise<ClubModel[]> {
-    const response = await this.httpClient.get('/club/fee-based-clubs/freetext', { freetext });
-    return response.data;
+  async getFeedBasedClubsByFreetext(params: {
+    freetext: string;
+  }): Promise<Response<ClubModel[]>> {
+    const response = await this.httpClient.get('/club/fee-based-clubs/freetext', params);
+    return response;
   }
 
-  async getActualMatches(
-    clubId: number, 
-    justHome?: boolean, 
-    rangeDays?: number
-  ): Promise<ClubMatches> {
-    const params: any = {};
-    if (justHome !== undefined) params.justHome = justHome;
-    if (rangeDays !== undefined) params.rangeDays = rangeDays;
-    
-    const response = await this.httpClient.get(`/club/id/${clubId}/actualmatches`, params);
-    return response.data;
+  async getActualMatches(params: {
+    clubId: number;
+    justHome?: boolean;
+    rangeDays?: number;
+  }): Promise<Response<ClubMatches>> {
+    const { clubId, ...queryParams } = params;
+    const response = await this.httpClient.get(`/club/id/${clubId}/actualmatches`, queryParams);
+    return response;
   }
 } 

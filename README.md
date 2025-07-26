@@ -18,8 +18,12 @@ import BasketballBundSDK from 'basketball-bund-sdk';
 const sdk = new BasketballBundSDK();
 
 // Beispiel: Vereine suchen
-const clubs = await sdk.club.getClubsByFreetext('München');
-console.log(clubs);
+const clubsResponse = await sdk.club.getClubsByFreetext({
+  freetext: 'München'
+});
+if (clubsResponse.success && clubsResponse.data) {
+  console.log('Anzahl Vereine:', clubsResponse.data.length);
+}
 ```
 
 ### CommonJS (Node.js)
@@ -30,8 +34,12 @@ const { default: BasketballBundSDK } = require('basketball-bund-sdk/cjs');
 const sdk = new BasketballBundSDK();
 
 // Beispiel: Spielplan einer Liga abrufen
-const competition = await sdk.competition.getSpielplan(12345);
-console.log(competition);
+const competitionResponse = await sdk.competition.getSpielplan({
+  competitionId: 12345
+});
+if (competitionResponse.success && competitionResponse.data) {
+  console.log('Liga Name:', competitionResponse.data.competition.liganame);
+}
 ```
 
 ### TypeScript (mit vollständiger Typisierung)
@@ -45,16 +53,24 @@ const sdk = new BasketballBundSDK({
 });
 
 // Beispiel: Captcha generieren
-const captcha = await sdk.captcha.generate();
-console.log(captcha);
+const captchaResponse = await sdk.captcha.generate();
+if (captchaResponse.success && captchaResponse.data) {
+  console.log('Captcha Code:', captchaResponse.data.captchaCode);
+}
 
 // Beispiel: Vereine suchen
-const clubs = await sdk.club.getClubsByFreetext('Berlin');
-console.log(clubs);
+const clubsResponse = await sdk.club.getClubsByFreetext({
+  freetext: 'Berlin'
+});
+if (clubsResponse.success && clubsResponse.data) {
+  console.log('Anzahl Vereine:', clubsResponse.data.length);
+}
 
 // Beispiel: Benutzer-Kontext abrufen
-const userContext = await sdk.user.getLoginContext();
-console.log(userContext);
+const userContextResponse = await sdk.user.getLoginContext();
+if (userContextResponse.success && userContextResponse.data) {
+  console.log('User Logged In:', userContextResponse.data.isLoggedIn);
+}
 ```
 
 ### 🔐 Authentifizierung
@@ -77,15 +93,66 @@ if (loginResult.success) {
   console.log('✅ Authentifiziert!');
   console.log('🍪 Session Cookie:', loginResult.sessionCookie);
   
-  // Jetzt sind alle API-Calls authentifiziert
-  const userContext = await sdk.user.getLoginContext();
-  console.log('👤 Benutzer:', userContext);
+  // 🎯 WICHTIG: Nach erfolgreichem Login verwenden ALLE API-Calls automatisch die SESSION-Cookie
+  const userContextResponse = await sdk.user.getLoginContext();
+  const clubsResponse = await sdk.club.getSearchClubMetadata();
+  const matchesResponse = await sdk.match.getMatchInfo({
+    matchId: 12345
+  });
+  
+  if (userContextResponse.success && userContextResponse.data) {
+    console.log('👤 Benutzer:', userContextResponse.data);
+  }
 } else {
   console.log('❌ Login fehlgeschlagen:', loginResult.error);
 }
 
 // Logout
 await sdk.auth.logout();
+```
+
+## 📋 Response-Typen
+
+Alle API-Calls geben ein `Response<T>` Objekt zurück:
+
+```typescript
+interface Response<T> {
+  data?: T;           // Die eigentlichen Daten
+  success?: boolean;  // Erfolg/Fehler-Status
+  errors?: string[];  // Fehlermeldungen
+  warnings?: string[]; // Warnungen
+}
+```
+
+### Beispiel für Response-Typen:
+
+```typescript
+// Captcha Service - Response<Captcha>
+const captchaResponse = await sdk.captcha.generate();
+if (captchaResponse.success && captchaResponse.data) {
+  console.log('Captcha Code:', captchaResponse.data.captchaCode);
+}
+
+// Club Service - Response<ClubModel[]>
+const clubsResponse = await sdk.club.getClubsByFreetext({
+  freetext: 'Berlin'
+});
+if (clubsResponse.success && clubsResponse.data) {
+  console.log('Anzahl Vereine:', clubsResponse.data.length);
+}
+
+// Match Service - Response<MatchModel>
+const matchResponse = await sdk.match.getMatchInfo({
+  matchId: 12345
+});
+if (matchResponse.success && matchResponse.data) {
+  console.log('Home Team:', matchResponse.data.homeTeam.name);
+}
+
+// Fehlerbehandlung
+if (!matchResponse.success) {
+  console.error('Fehler:', matchResponse.errors);
+}
 ```
 
 ## Konfiguration
@@ -122,6 +189,13 @@ const loginResult = await sdk.auth.login({
 // Authentifizierungsstatus prüfen
 const isAuthenticated = sdk.auth.isAuthenticated();
 
+// 🍪 Nach Login verwenden ALLE API-Calls automatisch die SESSION-Cookie
+if (loginResult.success) {
+  // Diese Calls sind automatisch authentifiziert
+  const userContext = await sdk.user.getLoginContext();
+  const clubs = await sdk.club.getSearchClubMetadata();
+}
+
 // Logout durchführen
 await sdk.auth.logout();
 ```
@@ -132,7 +206,9 @@ Verwaltung von Vereinsinformationen:
 
 ```typescript
 // Vereine nach Freitext suchen
-const clubs = await sdk.club.getClubsByFreetext('Bayern');
+const clubs = await sdk.club.getClubsByFreetext({
+  freetext: 'Bayern'
+});
 
 // Erweiterte Vereinssuche
 const searchResult = await sdk.club.searchClubs({
@@ -145,11 +221,11 @@ const searchResult = await sdk.club.searchClubs({
 });
 
 // Aktuelle Spiele eines Vereins
-const matches = await sdk.club.getActualMatches(
-  12345, // Vereins-ID
-  false, // nur Heimspiele?
-  7 // Anzahl Tage
-);
+const matches = await sdk.club.getActualMatches({
+  clubId: 12345,
+  justHome: false,
+  rangeDays: 7
+});
 
 // Such-Metadaten abrufen
 const metadata = await sdk.club.getSearchClubMetadata();
@@ -161,13 +237,20 @@ Liga- und Wettkampfinformationen:
 
 ```typescript
 // Spielplan einer Liga
-const spielplan = await sdk.competition.getSpielplan(12345);
+const spielplan = await sdk.competition.getSpielplan({
+  competitionId: 12345
+});
 
 // Tabelle einer Liga
-const tabelle = await sdk.competition.getTabelle(12345);
+const tabelle = await sdk.competition.getTabelle({
+  competitionId: 12345
+});
 
 // Aktuelle Spiele einer Liga
-const actualMatches = await sdk.competition.getActual(12345, 7);
+const actualMatches = await sdk.competition.getActual({
+  competitionId: 12345,
+  anzahlTage: 7
+});
 
 // Spiele nach Spieltag
 const matchDay = await sdk.competition.getByMatchDay(12345, 5);
@@ -179,7 +262,9 @@ const crossTable = await sdk.competition.getCrosstable(12345);
 const teamStats = await sdk.competition.getTeamStatistic(12345, true);
 
 // Liga-Liste abrufen
-const competitions = await sdk.competition.getLigaList([12345, 67890]);
+const competitions = await sdk.competition.getLigaList({
+  competitionIds: [12345, 67890]
+});
 ```
 
 ### ⚽ MatchService
@@ -188,16 +273,24 @@ Spiel-Informationen:
 
 ```typescript
 // Spiel-Details
-const match = await sdk.match.getMatchById(12345);
+const match = await sdk.match.getMatchById({
+  matchId: 12345
+});
 
 // Spiel-Informationen
-const matchInfo = await sdk.match.getMatchInfo(12345);
+const matchInfo = await sdk.match.getMatchInfo({
+  matchId: 12345
+});
 
 // Boxscore eines Spiels
-const boxscore = await sdk.match.getBoxscore(12345);
+const boxscore = await sdk.match.getBoxscore({
+  matchId: 12345
+});
 
 // Play-by-Play Report
-const playByPlay = await sdk.match.getPlayByPlayReport(12345);
+const playByPlay = await sdk.match.getPlayByPlayReport({
+  matchId: 12345
+});
 
 // Spiele suchen
 const searchResult = await sdk.match.searchMatches({
@@ -217,10 +310,10 @@ Team-Informationen:
 
 ```typescript
 // Spiele eines Teams
-const teamMatches = await sdk.team.getMatches(
-  12345, // Team-ID
-  false  // nur Heimspiele?
-);
+const teamMatches = await sdk.team.getMatches({
+  teamId: 12345,
+  justHome: false
+});
 ```
 
 ### 👤 UserService
@@ -247,11 +340,11 @@ Spieler-Registrierung:
 
 ```typescript
 // Registrierungs-Informationen abrufen
-const regInfo = await sdk.registration.getRegistrationInfo(
-  'data', 
-  12345, 
-  'signature'
-);
+const regInfo = await sdk.registration.getRegistrationInfo({
+  type: 'data',
+  registrationId: 12345,
+  signature: 'signature'
+});
 
 // Spieler-Einladung initialisieren
 const invitationForm = await sdk.registration.invitePlayerInit();
@@ -272,6 +365,37 @@ const result = await sdk.registration.invitePlayer({
     gender: 1,
     // weitere Felder...
   }
+});
+```
+
+### 🏀 WamService
+
+Wettkampf- und Altersklassen-Management:
+
+```typescript
+// Liga-Liste abrufen
+const ligaList = await sdk.wam.getLigaList({
+  akgGeschlechtIds: [],
+  altersklasseIds: [],
+  gebietIds: [],
+  ligatypIds: [],
+  sortBy: 0,
+  spielklasseIds: [],
+  token: "",
+  verbandIds: [3],
+  startAtIndex: 0
+});
+
+// WAM-Daten abrufen
+const wamData = await sdk.wam.getWamDataList({
+  akgGeschlechtIds: [],
+  altersklasseIds: [],
+  gebietIds: [],
+  ligatypIds: [],
+  sortBy: 0,
+  spielklasseIds: [],
+  token: "",
+  verbandIds: [3]
 });
 ```
 

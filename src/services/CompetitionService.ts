@@ -1,64 +1,87 @@
 import { HttpClient } from '../http/HttpClient';
-import { CompetitionModel, CompetitionDesc } from '../types';
+import { CompetitionModel, CompetitionDesc, Response } from '../types';
 
 export class CompetitionService {
   constructor(private httpClient: HttpClient) {}
 
-  async getSpielplan(competitionId: number): Promise<CompetitionModel> {
-    const response = await this.httpClient.get(`/competition/spielplan/id/${competitionId}`);
-    return response.data;
+  async getSpielplan(params: {
+    competitionId: number;
+  }): Promise<Response<CompetitionModel>> {
+    const response = await this.httpClient.get(`/competition/spielplan/id/${params.competitionId}`);
+    return response;
   }
 
-  async getLigaList(competitionIds: number[]): Promise<CompetitionDesc[]> {
-    const response = await this.httpClient.post('/competition/list', competitionIds);
-    return response.data;
+  async getLigaList(params: {
+    competitionIds: number[];
+  }): Promise<Response<CompetitionDesc[]>> {
+    const response = await this.httpClient.post('/competition/list', params.competitionIds);
+    return response;
   }
 
-  async getByMatchDay(competitionId: number, matchDay?: number): Promise<CompetitionModel> {
-    const endpoint = matchDay 
-      ? `/competition/id/${competitionId}/matchday/${matchDay}`
-      : `/competition/id/${competitionId}/matchday`;
+  async getByMatchDay(params: {
+    competitionId: number;
+    matchDay?: number;
+  }): Promise<Response<CompetitionModel>> {
+    const endpoint = params.matchDay 
+      ? `/competition/id/${params.competitionId}/matchday/${params.matchDay}`
+      : `/competition/id/${params.competitionId}/matchday`;
     
     const response = await this.httpClient.get(endpoint);
-    return response.data;
+    return response;
   }
 
-  async getActual(competitionId: number, anzahlTage?: number): Promise<CompetitionModel> {
-    const params: any = {};
-    if (anzahlTage !== undefined) params.anzahlTage = anzahlTage;
+  async getActual(params: {
+    competitionId: number;
+    anzahlTage?: number;
+  }): Promise<Response<CompetitionModel>> {
+    const queryParams: any = {};
+    if (params.anzahlTage !== undefined) queryParams.anzahlTage = params.anzahlTage;
     
-    const response = await this.httpClient.get(`/competition/actual/id/${competitionId}`, params);
-    return response.data;
+    const response = await this.httpClient.get(`/competition/actual/id/${params.competitionId}`, queryParams);
+    return response;
   }
 
-  async getActualByCompNo(competitionNumber: number, rangeDays?: number): Promise<CompetitionModel> {
-    const params: any = {};
-    if (rangeDays !== undefined) params.rangeDays = rangeDays;
+  async getActualByCompNo(params: {
+    competitionNumber: number;
+    rangeDays?: number;
+  }): Promise<Response<CompetitionModel>> {
+    const queryParams: any = {};
+    if (params.rangeDays !== undefined) queryParams.rangeDays = params.rangeDays;
     
-    const response = await this.httpClient.get(`/competition/number/${competitionNumber}/actual`, params);
-    return response.data;
+    const response = await this.httpClient.get(`/competition/number/${params.competitionNumber}/actual`, queryParams);
+    return response;
   }
 
-  async getTabelle(competitionId: number): Promise<CompetitionModel> {
-    const response = await this.httpClient.get(`/competition/table/id/${competitionId}`);
-    return response.data;
+  async getTabelle(params: {
+    competitionId: number;
+  }): Promise<Response<CompetitionModel>> {
+    const response = await this.httpClient.get(`/competition/table/id/${params.competitionId}`);
+    return response;
   }
 
-  async getByMatchDate(competitionId: number, matchDate: string): Promise<CompetitionModel> {
-    const response = await this.httpClient.get(`/competition/id/${competitionId}/matchdate/${matchDate}`);
-    return response.data;
+  async getByMatchDate(params: {
+    competitionId: number;
+    matchDate: string;
+  }): Promise<Response<CompetitionModel>> {
+    const response = await this.httpClient.get(`/competition/id/${params.competitionId}/matchdate/${params.matchDate}`);
+    return response;
   }
 
-  async getCrosstable(competitionId: number): Promise<CompetitionModel> {
-    const response = await this.httpClient.get(`/competition/crosstable/id/${competitionId}`);
-    return response.data;
+  async getCrosstable(params: {
+    competitionId: number;
+  }): Promise<Response<CompetitionModel>> {
+    const response = await this.httpClient.get(`/competition/crosstable/id/${params.competitionId}`);
+    return response;
   }
 
-  async getTeamStatistic(competitionId: number, perMatch?: boolean): Promise<CompetitionModel> {
-    const params: any = {};
-    if (perMatch !== undefined) params.perMatch = perMatch;
+  async getTeamStatistic(params: {
+    competitionId: number;
+    perMatch?: boolean;
+  }): Promise<Response<CompetitionModel>> {
+    const queryParams: any = {};
+    if (params.perMatch !== undefined) queryParams.perMatch = params.perMatch;
     
-    const response = await this.httpClient.get(`/competition/teamstatistic/id/${competitionId}`, params);
-    return response.data;
+    const response = await this.httpClient.get(`/competition/teamstatistic/id/${params.competitionId}`, queryParams);
+    return response;
   }
 } 

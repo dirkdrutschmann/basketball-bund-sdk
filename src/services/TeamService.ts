@@ -1,14 +1,17 @@
 import { HttpClient } from '../http/HttpClient';
-import { TeamMatches } from '../types';
+import { TeamMatches, Response } from '../types';
 
 export class TeamService {
   constructor(private httpClient: HttpClient) {}
 
-  async getMatches(teamId: number, justHome?: boolean): Promise<TeamMatches> {
-    const params: any = {};
-    if (justHome !== undefined) params.justHome = justHome;
+  async getMatches(params: {
+    teamId: number;
+    justHome?: boolean;
+  }): Promise<Response<TeamMatches>> {
+    const queryParams: any = {};
+    if (params.justHome !== undefined) queryParams.justHome = params.justHome;
     
-    const response = await this.httpClient.get(`/team/id/${teamId}/matches`, params);
-    return response.data;
+    const response = await this.httpClient.get(`/team/id/${params.teamId}/matches`, queryParams);
+    return response;
   }
 } 

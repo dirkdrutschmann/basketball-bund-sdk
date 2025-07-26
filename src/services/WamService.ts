@@ -1,19 +1,39 @@
 import { HttpClient } from '../http/HttpClient';
-import { Wam, LigaList, WamResponseData } from '../types';
+import { LigaList, WamResponseData, Response } from '../types';
 
 export class WamService {
   constructor(private httpClient: HttpClient) {}
 
-  async getLigaList(wam: Wam, startAtIndex?: number): Promise<LigaList> {
-    const params: any = {};
-    if (startAtIndex !== undefined) params.startAtIndex = startAtIndex;
+  async getLigaList(params: {
+    akgGeschlechtIds: string[];
+    altersklasseIds: number[];
+    gebietIds: number[];
+    ligatypIds: number[];
+    sortBy: number;
+    spielklasseIds: number[];
+    token: string;
+    verbandIds: number[];
+    startAtIndex?: number;
+  }): Promise<Response<LigaList>> {
+    const { startAtIndex, ...wamParams } = params;
+    const requestParams: any = {};
+    if (startAtIndex !== undefined) requestParams.startAtIndex = startAtIndex;
     
-    const response = await this.httpClient.post('/wam/liga/list', wam, params);
-    return response.data;
+    const response = await this.httpClient.post('/wam/liga/list', wamParams, requestParams);
+    return response;
   }
 
-  async getWamDataList(wam: Wam): Promise<WamResponseData> {
-    const response = await this.httpClient.post('/wam/data', wam);
-    return response.data;
+  async getWamDataList(params: {
+    akgGeschlechtIds: string[];
+    altersklasseIds: number[];
+    gebietIds: number[];
+    ligatypIds: number[];
+    sortBy: number;
+    spielklasseIds: number[];
+    token: string;
+    verbandIds: number[];
+  }): Promise<Response<WamResponseData>> {
+    const response = await this.httpClient.post('/wam/data', params);
+    return response;
   }
 } 

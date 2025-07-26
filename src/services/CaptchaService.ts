@@ -1,11 +1,11 @@
 import { HttpClient } from '../http/HttpClient';
-import { Captcha } from '../types';
+import { Captcha, Response } from '../types';
 
 export class CaptchaService {
   constructor(private httpClient: HttpClient) {}
 
-  async generate(): Promise<Captcha> {
+  async generate(): Promise<Response<Captcha>> {
     const response = await this.httpClient.get('/captcha/generate');
-    return response.data;
+    return response;
   }
 } 

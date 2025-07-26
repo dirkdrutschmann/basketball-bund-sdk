@@ -65,9 +65,13 @@ export class HttpClient {
   ): Promise<HttpResponse<T>> {
     try {
       const url = this.buildUrl(path, params);
+      
+      // Stelle sicher, dass Cookies für alle Requests gesendet werden
+      const headers = { ...this.config.headers };
+      
       const options: RequestInit = {
         method,
-        headers: this.config.headers,
+        headers,
         signal: AbortSignal.timeout(this.config.timeout)
       };
 

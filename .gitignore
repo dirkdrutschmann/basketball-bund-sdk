@@ -3,7 +3,7 @@ node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-package-lock.json
+# package-lock.json (kept for reproducible builds)
 yarn.lock
 
 # Build output
@@ -43,8 +43,8 @@ coverage/
 *.lcov
 .nyc_output
 
-# jest
-jest.config.js
+# jest coverage
+coverage/
 
 # Temporary folders
 tmp/

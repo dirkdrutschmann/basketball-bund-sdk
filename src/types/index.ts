@@ -86,7 +86,7 @@ export interface PlayerRegistrationStep1Form {
   sigendData: any;
 }
 
-export interface PlayerRegistrationStep2Form<T = any> {
+export interface PlayerRegistrationStep2Form {
   captcha: Captcha;
   club: ClubModel;
   invitationData: InvitationData;

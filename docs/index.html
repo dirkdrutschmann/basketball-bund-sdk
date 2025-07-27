@@ -570,24 +570,14 @@ if (loginSuccess) {
 
             <h3>Methoden</h3>
             <div class="method-signature">
-                <span class="method-name">getLigaList(params: LigaListParams): Promise&lt;LigaList&gt;</span>
+                <span class="method-name">getLigaList(params: <a href="#liga-list-params">LigaListParams</a>): Promise&lt;LigaList&gt;</span>
             </div>
             <p>Ruft eine Liste von Ligen ab.</p>
 
             <div class="method-signature">
-                <span class="method-name">getLigaDetails(params: LigaDetailsParams): Promise&lt;LigaDetails&gt;</span>
+                <span class="method-name">getWamDataList(params: <a href="#wam-params">WamParams</a>): Promise&lt;WamResponseData&gt;</span>
             </div>
-            <p>Ruft Details zu einer spezifischen Liga ab.</p>
-
-            <div class="method-signature">
-                <span class="method-name">getSpielplan(params: SpielplanParams): Promise&lt;Spielplan&gt;</span>
-            </div>
-            <p>Ruft den Spielplan für eine Liga ab.</p>
-
-            <div class="method-signature">
-                <span class="method-name">getTabelle(params: TabelleParams): Promise&lt;Tabelle&gt;</span>
-            </div>
-            <p>Ruft die Tabelle für eine Liga ab.</p>
+            <p>Ruft WAM-Daten ab.</p>
         </div>
 
         <div class="section" id="club-service">
@@ -602,22 +592,22 @@ if (loginSuccess) {
             <p>Ruft Metadaten für die Vereinssuche ab (Altersklassen, Ebenen, Gebiete).</p>
 
             <div class="method-signature">
-                <span class="method-name">searchClubs(params: SearchClubParams): Promise&lt;SearchClubResponseData&gt;</span>
+                <span class="method-name">searchClubs(params: <a href="#search-club-params">SearchClubParams</a>): Promise&lt;SearchClubResponseData&gt;</span>
             </div>
             <p>Durchsucht Vereine nach verschiedenen Kriterien.</p>
 
             <div class="method-signature">
-                <span class="method-name">getClubsByFreetext(params: ClubFreetextParams): Promise&lt;ClubModel[]&gt;</span>
+                <span class="method-name">getClubsByFreetext(params: <a href="#club-freetext-params">ClubFreetextParams</a>): Promise&lt;ClubModel[]&gt;</span>
             </div>
             <p>Sucht Vereine nach Freitext.</p>
 
             <div class="method-signature">
-                <span class="method-name">getFeedBasedClubsByFreetext(params: ClubFreetextParams): Promise&lt;ClubModel[]&gt;</span>
+                <span class="method-name">getFeedBasedClubsByFreetext(params: <a href="#club-freetext-params">ClubFreetextParams</a>): Promise&lt;ClubModel[]&gt;</span>
             </div>
             <p>Sucht kostenpflichtige Vereine nach Freitext.</p>
 
             <div class="method-signature">
-                <span class="method-name">getActualMatches(params: ClubActualMatchesParams): Promise&lt;ClubMatches&gt;</span>
+                <span class="method-name">getActualMatches(params: <a href="#club-actual-matches-params">ClubActualMatchesParams</a>): Promise&lt;ClubMatches&gt;</span>
             </div>
             <p>Ruft aktuelle Spiele eines Vereins ab.</p>
         </div>
@@ -629,27 +619,27 @@ if (loginSuccess) {
 
             <h3>Methoden</h3>
             <div class="method-signature">
-                <span class="method-name">getMatchInfo(params: MatchInfoParams): Promise&lt;MatchModel&gt;</span>
+                <span class="method-name">getMatchInfo(params: <a href="#match-info-params">MatchInfoParams</a>): Promise&lt;MatchModel&gt;</span>
             </div>
             <p>Ruft Informationen zu einem spezifischen Spiel ab.</p>
 
             <div class="method-signature">
-                <span class="method-name">getMatchById(params: MatchInfoParams): Promise&lt;MatchModel&gt;</span>
+                <span class="method-name">getMatchById(params: <a href="#match-info-params">MatchInfoParams</a>): Promise&lt;MatchModel&gt;</span>
             </div>
             <p>Ruft ein Spiel anhand der ID ab.</p>
 
             <div class="method-signature">
-                <span class="method-name">getBoxscore(params: MatchInfoParams): Promise&lt;MatchModel&gt;</span>
+                <span class="method-name">getBoxscore(params: <a href="#match-info-params">MatchInfoParams</a>): Promise&lt;MatchModel&gt;</span>
             </div>
             <p>Ruft den Boxscore eines Spiels ab.</p>
 
             <div class="method-signature">
-                <span class="method-name">getPlayByPlayReport(params: MatchInfoParams): Promise&lt;MatchModel&gt;</span>
+                <span class="method-name">getPlayByPlayReport(params: <a href="#match-info-params">MatchInfoParams</a>): Promise&lt;MatchModel&gt;</span>
             </div>
             <p>Ruft den Play-by-Play Report eines Spiels ab.</p>
 
             <div class="method-signature">
-                <span class="method-name">searchMatches(params: SearchMatchParams): Promise&lt;SearchMatchResponseData&gt;</span>
+                <span class="method-name">searchMatches(params: <a href="#search-match-params">SearchMatchParams</a>): Promise&lt;SearchMatchResponseData&gt;</span>
             </div>
             <p>Durchsucht Spiele nach verschiedenen Kriterien.</p>
         </div>
@@ -661,22 +651,22 @@ if (loginSuccess) {
 
             <h3>Methoden</h3>
             <div class="method-signature">
-                <span class="method-name">getSpielplan(params: CompetitionSpielplanParams): Promise&lt;CompetitionModel&gt;</span>
+                <span class="method-name">getSpielplan(params: <a href="#competition-spielplan-params">CompetitionSpielplanParams</a>): Promise&lt;CompetitionModel&gt;</span>
             </div>
             <p>Ruft den Spielplan eines Wettbewerbs ab.</p>
 
             <div class="method-signature">
-                <span class="method-name">getLigaList(params: CompetitionLigaListParams): Promise&lt;CompetitionDesc[]&gt;</span>
+                <span class="method-name">getLigaList(params: <a href="#competition-liga-list-params">CompetitionLigaListParams</a>): Promise&lt;CompetitionDesc[]&gt;</span>
             </div>
             <p>Ruft eine Liste von Ligen ab.</p>
 
             <div class="method-signature">
-                <span class="method-name">getActual(params: CompetitionActualParams): Promise&lt;CompetitionModel&gt;</span>
+                <span class="method-name">getActual(params: <a href="#competition-actual-params">CompetitionActualParams</a>): Promise&lt;CompetitionModel&gt;</span>
             </div>
             <p>Ruft aktuelle Spiele eines Wettbewerbs ab.</p>
 
             <div class="method-signature">
-                <span class="method-name">getTabelle(params: CompetitionTabelleParams): Promise&lt;CompetitionModel&gt;</span>
+                <span class="method-name">getTabelle(params: <a href="#competition-tabelle-params">CompetitionTabelleParams</a>): Promise&lt;CompetitionModel&gt;</span>
             </div>
             <p>Ruft die Tabelle eines Wettbewerbs ab.</p>
         </div>
@@ -688,7 +678,7 @@ if (loginSuccess) {
 
             <h3>Methoden</h3>
             <div class="method-signature">
-                <span class="method-name">getMatches(params: TeamMatchesParams): Promise&lt;TeamMatches&gt;</span>
+                <span class="method-name">getMatches(params: <a href="#team-matches-params">TeamMatchesParams</a>): Promise&lt;TeamMatches&gt;</span>
             </div>
             <p>Ruft Spiele eines Teams ab.</p>
         </div>
@@ -727,7 +717,7 @@ if (loginSuccess) {
 
             <h3>Methoden</h3>
             <div class="method-signature">
-                <span class="method-name">getRegistrationInfo(params: RegistrationInfoParams): Promise&lt;any&gt;</span>
+                <span class="method-name">getRegistrationInfo(params: <a href="#registration-info-params">RegistrationInfoParams</a>): Promise&lt;any&gt;</span>
             </div>
             <p>Ruft Registrierungs-Informationen ab.</p>
 
@@ -737,7 +727,7 @@ if (loginSuccess) {
             <p>Initialisiert eine Spieler-Einladung.</p>
 
             <div class="method-signature">
-                <span class="method-name">invitePlayer(params: InvitePlayerParams): Promise&lt;any&gt;</span>
+                <span class="method-name">invitePlayer(params: <a href="#invite-player-params">InvitePlayerParams</a>): Promise&lt;any&gt;</span>
             </div>
             <p>Lädt einen Spieler ein.</p>
         </div>
@@ -900,7 +890,7 @@ const ligaList = await sdk.wam.getLigaList(params);
         <div class="section" id="parameter-types">
             <h2>Parameter-Typen</h2>
             
-            <h3>LigaListParams</h3>
+            <h3 id="liga-list-params">LigaListParams</h3>
             <div class="code-block">
                 <pre>interface LigaListParams {
     akgGeschlechtIds: string[];
@@ -915,7 +905,21 @@ const ligaList = await sdk.wam.getLigaList(params);
 }</pre>
             </div>
 
-            <h3>SearchClubParams</h3>
+            <h3 id="wam-params">WamParams</h3>
+            <div class="code-block">
+                <pre>interface WamParams {
+    akgGeschlechtIds: string[];
+    altersklasseIds: number[];
+    gebietIds: number[];
+    ligatypIds: number[];
+    sortBy: number;
+    spielklasseIds: number[];
+    token: string;
+    verbandIds: number[];
+}</pre>
+            </div>
+
+            <h3 id="search-club-params">SearchClubParams</h3>
             <div class="code-block">
                 <pre>interface SearchClubParams {
     akjIdList: number[];
@@ -927,7 +931,7 @@ const ligaList = await sdk.wam.getLigaList(params);
 }</pre>
             </div>
 
-            <h3>SearchMatchParams</h3>
+            <h3 id="search-match-params">SearchMatchParams</h3>
             <div class="code-block">
                 <pre>interface SearchMatchParams {
     akGruppeIdList: number[];
@@ -940,14 +944,14 @@ const ligaList = await sdk.wam.getLigaList(params);
 }</pre>
             </div>
 
-            <h3>ClubFreetextParams</h3>
+            <h3 id="club-freetext-params">ClubFreetextParams</h3>
             <div class="code-block">
                 <pre>interface ClubFreetextParams {
     freetext: string;
 }</pre>
             </div>
 
-            <h3>ClubActualMatchesParams</h3>
+            <h3 id="club-actual-matches-params">ClubActualMatchesParams</h3>
             <div class="code-block">
                 <pre>interface ClubActualMatchesParams {
     clubId: number;
@@ -956,28 +960,28 @@ const ligaList = await sdk.wam.getLigaList(params);
 }</pre>
             </div>
 
-            <h3>MatchInfoParams</h3>
+            <h3 id="match-info-params">MatchInfoParams</h3>
             <div class="code-block">
                 <pre>interface MatchInfoParams {
     matchId: number;
 }</pre>
             </div>
 
-            <h3>CompetitionSpielplanParams</h3>
+            <h3 id="competition-spielplan-params">CompetitionSpielplanParams</h3>
             <div class="code-block">
                 <pre>interface CompetitionSpielplanParams {
     competitionId: number;
 }</pre>
             </div>
 
-            <h3>CompetitionLigaListParams</h3>
+            <h3 id="competition-liga-list-params">CompetitionLigaListParams</h3>
             <div class="code-block">
                 <pre>interface CompetitionLigaListParams {
     competitionIds: number[];
 }</pre>
             </div>
 
-            <h3>CompetitionActualParams</h3>
+            <h3 id="competition-actual-params">CompetitionActualParams</h3>
             <div class="code-block">
                 <pre>interface CompetitionActualParams {
     competitionId: number;
@@ -985,14 +989,14 @@ const ligaList = await sdk.wam.getLigaList(params);
 }</pre>
             </div>
 
-            <h3>CompetitionTabelleParams</h3>
+            <h3 id="competition-tabelle-params">CompetitionTabelleParams</h3>
             <div class="code-block">
                 <pre>interface CompetitionTabelleParams {
     competitionId: number;
 }</pre>
             </div>
 
-            <h3>TeamMatchesParams</h3>
+            <h3 id="team-matches-params">TeamMatchesParams</h3>
             <div class="code-block">
                 <pre>interface TeamMatchesParams {
     teamId: number;
@@ -1000,7 +1004,7 @@ const ligaList = await sdk.wam.getLigaList(params);
 }</pre>
             </div>
 
-            <h3>RegistrationInfoParams</h3>
+            <h3 id="registration-info-params">RegistrationInfoParams</h3>
             <div class="code-block">
                 <pre>interface RegistrationInfoParams {
     type: string;
@@ -1009,7 +1013,7 @@ const ligaList = await sdk.wam.getLigaList(params);
 }</pre>
             </div>
 
-            <h3>InvitePlayerParams</h3>
+            <h3 id="invite-player-params">InvitePlayerParams</h3>
             <div class="code-block">
                 <pre>interface InvitePlayerParams {
     captcha: {

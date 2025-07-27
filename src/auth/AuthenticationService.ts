@@ -60,6 +60,13 @@ export class AuthenticationService {
           error: 'No session cookie received'
         };
       }
+      
+      if(!await this.isAuthenticated()) {
+        return {
+          success: false,
+          sessionCookie
+        };
+      }
 
       // Setze den SESSION-Cookie für zukünftige Requests
       this.httpClient.setHeaders({

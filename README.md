@@ -2,6 +2,8 @@
 
 Ein TypeScript/JavaScript SDK für die Basketball-Bund.net REST API.
 
+📖 **[Vollständige Dokumentation auf GitHub Pages](https://drutschmann.github.io/team-sl-sdk/)**
+
 ## Installation
 
 ```bash
@@ -631,7 +633,8 @@ Bei Fragen oder Problemen erstellen Sie bitte ein Issue im [GitHub Repository](h
 
 ## Autor
 
-**Dirk Drutschmann**
+### Dirk Drutschmann
+
 - Website: [https://drutschmann.dev](https://drutschmann.dev)
-- E-Mail: mail@drutschmann.dev
-- GitHub: [@ddrutschmann](https://github.com/ddrutschmann) 
+- E-Mail: <mail@drutschmann.dev>
+- GitHub: [@dirkdrutschmann](https://github.com/dirkdrutschmann)

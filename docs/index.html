@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basketball Bund SDK - Dokumentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 300px;
+            height: 100vh;
+            background: #fff;
+            border-right: 1px solid #e1e4e8;
+            overflow-y: auto;
+            padding: 20px 0;
+        }
+
+        .main-content {
+            margin-left: 300px;
+            padding: 40px;
+            background: #fff;
+            min-height: 100vh;
+        }
+
+        .logo {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid #e1e4e8;
+            margin-bottom: 20px;
+        }
+
+        .logo h1 {
+            color: #0366d6;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .logo p {
+            color: #586069;
+            font-size: 14px;
+        }
+
+        .nav-section {
+            margin-bottom: 30px;
+        }
+
+        .nav-section h3 {
+            padding: 0 20px 10px;
+            color: #24292e;
+            font-size: 16px;
+            font-weight: 600;
+            border-bottom: 1px solid #e1e4e8;
+            margin-bottom: 10px;
+        }
+
+        .nav-item {
+            display: block;
+            padding: 8px 20px;
+            color: #586069;
+            text-decoration: none;
+            font-size: 14px;
+            border-left: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .nav-item:hover {
+            background: #f6f8fa;
+            color: #0366d6;
+            border-left-color: #0366d6;
+        }
+
+        .nav-item.active {
+            background: #f1f8ff;
+            color: #0366d6;
+            border-left-color: #0366d6;
+        }
+
+        .section {
+            margin-bottom: 60px;
+        }
+
+        .section h2 {
+            color: #24292e;
+            font-size: 32px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e1e4e8;
+        }
+
+        .section h3 {
+            color: #24292e;
+            font-size: 24px;
+            margin: 30px 0 15px;
+        }
+
+        .section h4 {
+            color: #24292e;
+            font-size: 20px;
+            margin: 25px 0 10px;
+        }
+
+        .code-block {
+            background: #f6f8fa;
+            border: 1px solid #e1e4e8;
+            border-radius: 6px;
+            padding: 16px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            font-size: 14px;
+        }
+
+        .code-block pre {
+            margin: 0;
+        }
+
+        .method-signature {
+            background: #f1f8ff;
+            border-left: 4px solid #0366d6;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .method-name {
+            color: #0366d6;
+            font-weight: 600;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+        }
+
+        .parameter-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .parameter-table th,
+        .parameter-table td {
+            border: 1px solid #e1e4e8;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .parameter-table th {
+            background: #f6f8fa;
+            font-weight: 600;
+        }
+
+        .type-badge {
+            background: #e1ecf4;
+            color: #2c5aa0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+        }
+
+        .required {
+            background: #ffeaa7;
+            color: #d63031;
+        }
+
+        .optional {
+            background: #55a3ff;
+            color: #fff;
+        }
+
+        .example {
+            background: #f8f9fa;
+            border: 1px solid #e1e4e8;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .example h5 {
+            color: #24292e;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .alert {
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+
+        .alert-info {
+            background: #f1f8ff;
+            border: 1px solid #c8e1ff;
+            color: #0366d6;
+        }
+
+        .alert-warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .mobile-toggle {
+                display: block;
+                position: fixed;
+                top: 20px;
+                left: 20px;
+                z-index: 1000;
+                background: #0366d6;
+                color: white;
+                border: none;
+                padding: 10px;
+                border-radius: 6px;
+                cursor: pointer;
+            }
+        }
+
+        .mobile-toggle {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <button class="mobile-toggle" onclick="toggleSidebar()">☰</button>
+    
+    <div class="sidebar" id="sidebar">
+        <div class="logo">
+            <h1>Basketball Bund SDK</h1>
+            <p>TypeScript SDK für die Basketball Bund API</p>
+        </div>
+
+        <div class="nav-section">
+            <h3>Übersicht</h3>
+            <a href="#installation" class="nav-item">Installation</a>
+            <a href="#quick-start" class="nav-item">Quick Start</a>
+            <a href="#authentication" class="nav-item">Authentifizierung</a>
+        </div>
+
+        <div class="nav-section">
+            <h3>Hauptklasse</h3>
+            <a href="#basketball-bund-sdk" class="nav-item">BasketballBundSDK</a>
+            <a href="#configuration" class="nav-item">Konfiguration</a>
+        </div>
+
+        <div class="nav-section">
+            <h3>Services</h3>
+            <a href="#authentication-service" class="nav-item">AuthenticationService</a>
+            <a href="#wam-service" class="nav-item">WamService</a>
+            <a href="#club-service" class="nav-item">ClubService</a>
+            <a href="#match-service" class="nav-item">MatchService</a>
+            <a href="#competition-service" class="nav-item">CompetitionService</a>
+            <a href="#team-service" class="nav-item">TeamService</a>
+            <a href="#user-service" class="nav-item">UserService</a>
+            <a href="#registration-service" class="nav-item">RegistrationService</a>
+            <a href="#captcha-service" class="nav-item">CaptchaService</a>
+        </div>
+
+        <div class="nav-section">
+            <h3>Datentypen</h3>
+            <a href="#response-types" class="nav-item">Response-Typen</a>
+            <a href="#model-types" class="nav-item">Model-Typen</a>
+            <a href="#parameter-types" class="nav-item">Parameter-Typen</a>
+        </div>
+
+        <div class="nav-section">
+            <h3>Beispiele</h3>
+            <a href="#basic-usage" class="nav-item">Grundlegende Nutzung</a>
+            <a href="#authentication-examples" class="nav-item">Authentifizierung</a>
+            <a href="#advanced-examples" class="nav-item">Erweiterte Beispiele</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="section" id="installation">
+            <h2>Installation</h2>
+            <p>Das Basketball Bund SDK kann über npm installiert werden:</p>
+            
+            <div class="code-block">
+                <pre>npm install basketball-bund-sdk</pre>
+            </div>
+
+            <div class="alert alert-info">
+                <strong>Hinweis:</strong> Das SDK unterstützt sowohl ES Modules als auch CommonJS.
+            </div>
+        </div>
+
+        <div class="section" id="quick-start">
+            <h2>Quick Start</h2>
+            
+            <h3>ES Modules (empfohlen)</h3>
+            <div class="code-block">
+                <pre>import { BasketballBundSDK } from 'basketball-bund-sdk';
+
+const sdk = new BasketballBundSDK({
+    baseUrl: 'https://www.basketball-bund.net/rest',
+    username: 'your-username',
+    password: 'your-password'
+});
+
+// Automatische Authentifizierung
+await sdk.authenticate('your-username', 'your-password');
+
+// Liga-Liste abrufen
+const ligaList = await sdk.wam.getLigaList({
+    akgGeschlechtIds: ['1'],
+    altersklasseIds: [1],
+    gebietIds: [1],
+    ligatypIds: [1],
+    sortBy: 1,
+    spielklasseIds: [1],
+    token: 'your-token',
+    verbandIds: [1]
+});
+
+console.log(ligaList);</pre>
+            </div>
+
+            <h3>CommonJS</h3>
+            <div class="code-block">
+                <pre>const { BasketballBundSDK } = require('basketball-bund-sdk/cjs');
+
+const sdk = new BasketballBundSDK({
+    baseUrl: 'https://www.basketball-bund.net/rest'
+});
+
+// Authentifizierung
+const isAuthenticated = await sdk.authenticate('username', 'password');
+console.log('Login erfolgreich:', isAuthenticated);</pre>
+            </div>
+        </div>
+
+        <div class="section" id="authentication">
+            <h2>Authentifizierung</h2>
+            
+            <p>Das SDK unterstützt automatische Authentifizierung über SESSION-Cookies:</p>
+
+            <div class="method-signature">
+                <span class="method-name">authenticate(username: string, password: string): Promise&lt;boolean&gt;</span>
+            </div>
+
+            <p>Führt eine Authentifizierung durch und gibt <code>true</code> zurück, wenn erfolgreich.</p>
+
+            <div class="method-signature">
+                <span class="method-name">isAuthenticated(): Promise&lt;boolean&gt;</span>
+            </div>
+
+            <p>Überprüft den aktuellen Authentifizierungsstatus durch einen API-Aufruf an <code>/user/lc</code>.</p>
+
+            <div class="example">
+                <h5>Authentifizierungsbeispiel</h5>
+                <div class="code-block">
+                    <pre>const sdk = new BasketballBundSDK();
+
+// Login durchführen
+const loginSuccess = await sdk.authenticate('username', 'password');
+if (loginSuccess) {
+    console.log('Login erfolgreich');
+    
+    // Status überprüfen
+    const isLoggedIn = await sdk.isAuthenticated();
+    console.log('Eingeloggt:', isLoggedIn);
+} else {
+    console.log('Login fehlgeschlagen');
+}</pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="basketball-bund-sdk">
+            <h2>BasketballBundSDK</h2>
+            
+            <p>Die Hauptklasse des SDK. Verwaltet alle Services und die HTTP-Kommunikation.</p>
+
+            <h3>Konstruktor</h3>
+            <div class="method-signature">
+                <span class="method-name">new BasketballBundSDK(config?: BasketballBundSDKConfig)</span>
+            </div>
+
+            <h3>Eigenschaften</h3>
+            <table class="parameter-table">
+                <thead>
+                    <tr>
+                        <th>Eigenschaft</th>
+                        <th>Typ</th>
+                        <th>Beschreibung</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>auth</code></td>
+                        <td><span class="type-badge">AuthenticationService</span></td>
+                        <td>Service für Authentifizierung</td>
+                    </tr>
+                    <tr>
+                        <td><code>wam</code></td>
+                        <td><span class="type-badge">WamService</span></td>
+                        <td>Service für WAM-Funktionen</td>
+                    </tr>
+                    <tr>
+                        <td><code>club</code></td>
+                        <td><span class="type-badge">ClubService</span></td>
+                        <td>Service für Vereins-Funktionen</td>
+                    </tr>
+                    <tr>
+                        <td><code>match</code></td>
+                        <td><span class="type-badge">MatchService</span></td>
+                        <td>Service für Spiel-Funktionen</td>
+                    </tr>
+                    <tr>
+                        <td><code>competition</code></td>
+                        <td><span class="type-badge">CompetitionService</span></td>
+                        <td>Service für Wettbewerbs-Funktionen</td>
+                    </tr>
+                    <tr>
+                        <td><code>team</code></td>
+                        <td><span class="type-badge">TeamService</span></td>
+                        <td>Service für Team-Funktionen</td>
+                    </tr>
+                    <tr>
+                        <td><code>user</code></td>
+                        <td><span class="type-badge">UserService</span></td>
+                        <td>Service für Benutzer-Funktionen</td>
+                    </tr>
+                    <tr>
+                        <td><code>registration</code></td>
+                        <td><span class="type-badge">RegistrationService</span></td>
+                        <td>Service für Registrierungs-Funktionen</td>
+                    </tr>
+                    <tr>
+                        <td><code>captcha</code></td>
+                        <td><span class="type-badge">CaptchaService</span></td>
+                        <td>Service für Captcha-Funktionen</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Methoden</h3>
+            <div class="method-signature">
+                <span class="method-name">authenticate(username: string, password: string): Promise&lt;boolean&gt;</span>
+            </div>
+            <p>Führt eine Authentifizierung durch.</p>
+
+            <div class="method-signature">
+                <span class="method-name">isAuthenticated(): Promise&lt;boolean&gt;</span>
+            </div>
+            <p>Überprüft den Authentifizierungsstatus.</p>
+
+            <div class="method-signature">
+                <span class="method-name">setHeaders(headers: Record&lt;string, string&gt;): void</span>
+            </div>
+            <p>Setzt HTTP-Header für alle nachfolgenden Anfragen.</p>
+
+            <div class="method-signature">
+                <span class="method-name">setBaseUrl(url: string): void</span>
+            </div>
+            <p>Ändert die Basis-URL für API-Anfragen.</p>
+        </div>
+
+        <div class="section" id="configuration">
+            <h2>Konfiguration</h2>
+            
+            <h3>BasketballBundSDKConfig</h3>
+            <table class="parameter-table">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Typ</th>
+                        <th>Erforderlich</th>
+                        <th>Standard</th>
+                        <th>Beschreibung</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>baseUrl</code></td>
+                        <td><span class="type-badge">string</span></td>
+                        <td><span class="type-badge optional">Optional</span></td>
+                        <td><code>'https://www.basketball-bund.net/rest'</code></td>
+                        <td>Basis-URL für API-Anfragen</td>
+                    </tr>
+                    <tr>
+                        <td><code>timeout</code></td>
+                        <td><span class="type-badge">number</span></td>
+                        <td><span class="type-badge optional">Optional</span></td>
+                        <td><code>30000</code></td>
+                        <td>Timeout in Millisekunden</td>
+                    </tr>
+                    <tr>
+                        <td><code>username</code></td>
+                        <td><span class="type-badge">string</span></td>
+                        <td><span class="type-badge optional">Optional</span></td>
+                        <td>-</td>
+                        <td>Benutzername für automatische Authentifizierung</td>
+                    </tr>
+                    <tr>
+                        <td><code>password</code></td>
+                        <td><span class="type-badge">string</span></td>
+                        <td><span class="type-badge optional">Optional</span></td>
+                        <td>-</td>
+                        <td>Passwort für automatische Authentifizierung</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section" id="authentication-service">
+            <h2>AuthenticationService</h2>
+            
+            <p>Verwaltet die Authentifizierung über SESSION-Cookies.</p>
+
+            <h3>Methoden</h3>
+            <div class="method-signature">
+                <span class="method-name">login(username: string, password: string): Promise&lt;LoginResponse&gt;</span>
+            </div>
+            <p>Führt eine Anmeldung durch und gibt Login-Informationen zurück.</p>
+
+            <div class="method-signature">
+                <span class="method-name">logout(): Promise&lt;void&gt;</span>
+            </div>
+            <p>Meldet den Benutzer ab und löscht die Session.</p>
+
+            <div class="method-signature">
+                <span class="method-name">isAuthenticated(): Promise&lt;boolean&gt;</span>
+            </div>
+            <p>Überprüft den Authentifizierungsstatus durch API-Aufruf.</p>
+        </div>
+
+        <div class="section" id="wam-service">
+            <h2>WamService</h2>
+            
+            <p>Service für WAM (Wettkampf- und Auswahlmanagement) Funktionen.</p>
+
+            <h3>Methoden</h3>
+            <div class="method-signature">
+                <span class="method-name">getLigaList(params: LigaListParams): Promise&lt;LigaList&gt;</span>
+            </div>
+            <p>Ruft eine Liste von Ligen ab.</p>
+
+            <div class="method-signature">
+                <span class="method-name">getLigaDetails(params: LigaDetailsParams): Promise&lt;LigaDetails&gt;</span>
+            </div>
+            <p>Ruft Details zu einer spezifischen Liga ab.</p>
+
+            <div class="method-signature">
+                <span class="method-name">getSpielplan(params: SpielplanParams): Promise&lt;Spielplan&gt;</span>
+            </div>
+            <p>Ruft den Spielplan für eine Liga ab.</p>
+
+            <div class="method-signature">
+                <span class="method-name">getTabelle(params: TabelleParams): Promise&lt;Tabelle&gt;</span>
+            </div>
+            <p>Ruft die Tabelle für eine Liga ab.</p>
+        </div>
+
+        <div class="section" id="club-service">
+            <h2>ClubService</h2>
+            
+            <p>Service für Vereins-bezogene Funktionen.</p>
+
+            <h3>Methoden</h3>
+            <div class="method-signature">
+                <span class="method-name">getSearchClubMetadata(): Promise&lt;SearchClubMetadata&gt;</span>
+            </div>
+            <p>Ruft Metadaten für die Vereinssuche ab (Altersklassen, Ebenen, Gebiete).</p>
+
+            <div class="method-signature">
+                <span class="method-name">searchClubs(params: SearchClubParams): Promise&lt;SearchClubResponseData&gt;</span>
+            </div>
+            <p>Durchsucht Vereine nach verschiedenen Kriterien.</p>
+
+            <div class="method-signature">
+                <span class="method-name">getClubsByFreetext(params: ClubFreetextParams): Promise&lt;ClubModel[]&gt;</span>
+            </div>
+            <p>Sucht Vereine nach Freitext.</p>
+
+            <div class="method-signature">
+                <span class="method-name">getFeedBasedClubsByFreetext(params: ClubFreetextParams): Promise&lt;ClubModel[]&gt;</span>
+            </div>
+            <p>Sucht kostenpflichtige Vereine nach Freitext.</p>
+
+            <div class="method-signature">
+                <span class="method-name">getActualMatches(params: ClubActualMatchesParams): Promise&lt;ClubMatches&gt;</span>
+            </div>
+            <p>Ruft aktuelle Spiele eines Vereins ab.</p>
+        </div>
+
+        <div class="section" id="match-service">
+            <h2>MatchService</h2>
+            
+            <p>Service für Spiel-bezogene Funktionen.</p>
+
+            <h3>Methoden</h3>
+            <div class="method-signature">
+                <span class="method-name">getMatchInfo(params: MatchInfoParams): Promise&lt;MatchModel&gt;</span>
+            </div>
+            <p>Ruft Informationen zu einem spezifischen Spiel ab.</p>
+
+            <div class="method-signature">
+                <span class="method-name">getMatchById(params: MatchInfoParams): Promise&lt;MatchModel&gt;</span>
+            </div>
+            <p>Ruft ein Spiel anhand der ID ab.</p>
+
+            <div class="method-signature">
+                <span class="method-name">getBoxscore(params: MatchInfoParams): Promise&lt;MatchModel&gt;</span>
+            </div>
+            <p>Ruft den Boxscore eines Spiels ab.</p>
+
+            <div class="method-signature">
+                <span class="method-name">getPlayByPlayReport(params: MatchInfoParams): Promise&lt;MatchModel&gt;</span>
+            </div>
+            <p>Ruft den Play-by-Play Report eines Spiels ab.</p>
+
+            <div class="method-signature">
+                <span class="method-name">searchMatches(params: SearchMatchParams): Promise&lt;SearchMatchResponseData&gt;</span>
+            </div>
+            <p>Durchsucht Spiele nach verschiedenen Kriterien.</p>
+        </div>
+
+        <div class="section" id="competition-service">
+            <h2>CompetitionService</h2>
+            
+            <p>Service für Wettbewerbs-bezogene Funktionen.</p>
+
+            <h3>Methoden</h3>
+            <div class="method-signature">
+                <span class="method-name">getSpielplan(params: CompetitionSpielplanParams): Promise&lt;CompetitionModel&gt;</span>
+            </div>
+            <p>Ruft den Spielplan eines Wettbewerbs ab.</p>
+
+            <div class="method-signature">
+                <span class="method-name">getLigaList(params: CompetitionLigaListParams): Promise&lt;CompetitionDesc[]&gt;</span>
+            </div>
+            <p>Ruft eine Liste von Ligen ab.</p>
+
+            <div class="method-signature">
+                <span class="method-name">getActual(params: CompetitionActualParams): Promise&lt;CompetitionModel&gt;</span>
+            </div>
+            <p>Ruft aktuelle Spiele eines Wettbewerbs ab.</p>
+
+            <div class="method-signature">
+                <span class="method-name">getTabelle(params: CompetitionTabelleParams): Promise&lt;CompetitionModel&gt;</span>
+            </div>
+            <p>Ruft die Tabelle eines Wettbewerbs ab.</p>
+        </div>
+
+        <div class="section" id="team-service">
+            <h2>TeamService</h2>
+            
+            <p>Service für Team-bezogene Funktionen.</p>
+
+            <h3>Methoden</h3>
+            <div class="method-signature">
+                <span class="method-name">getMatches(params: TeamMatchesParams): Promise&lt;TeamMatches&gt;</span>
+            </div>
+            <p>Ruft Spiele eines Teams ab.</p>
+        </div>
+
+        <div class="section" id="user-service">
+            <h2>UserService</h2>
+            
+            <p>Service für Benutzer-bezogene Funktionen.</p>
+
+            <h3>Methoden</h3>
+            <div class="method-signature">
+                <span class="method-name">getLoginContext(): Promise&lt;LoginModel&gt;</span>
+            </div>
+            <p>Ruft den aktuellen Login-Kontext ab.</p>
+
+            <div class="method-signature">
+                <span class="method-name">isDBBGeschaeftsstelle(): Promise&lt;boolean&gt;</span>
+            </div>
+            <p>Prüft, ob der Benutzer eine DBB-Geschäftsstelle ist.</p>
+
+            <div class="method-signature">
+                <span class="method-name">isGeschaeftsstelle(): Promise&lt;boolean&gt;</span>
+            </div>
+            <p>Prüft, ob der Benutzer eine Geschäftsstelle ist.</p>
+
+            <div class="method-signature">
+                <span class="method-name">getGeschaeftsstelleFor(): Promise&lt;any&gt;</span>
+            </div>
+            <p>Ruft Geschäftsstellen-Zuordnungen ab.</p>
+        </div>
+
+        <div class="section" id="registration-service">
+            <h2>RegistrationService</h2>
+            
+            <p>Service für Registrierungs-Funktionen.</p>
+
+            <h3>Methoden</h3>
+            <div class="method-signature">
+                <span class="method-name">getRegistrationInfo(params: RegistrationInfoParams): Promise&lt;any&gt;</span>
+            </div>
+            <p>Ruft Registrierungs-Informationen ab.</p>
+
+            <div class="method-signature">
+                <span class="method-name">invitePlayerInit(): Promise&lt;InvitationForm&gt;</span>
+            </div>
+            <p>Initialisiert eine Spieler-Einladung.</p>
+
+            <div class="method-signature">
+                <span class="method-name">invitePlayer(params: InvitePlayerParams): Promise&lt;any&gt;</span>
+            </div>
+            <p>Lädt einen Spieler ein.</p>
+        </div>
+
+        <div class="section" id="captcha-service">
+            <h2>CaptchaService</h2>
+            
+            <p>Service für Captcha-Funktionen.</p>
+
+            <h3>Methoden</h3>
+            <div class="method-signature">
+                <span class="method-name">generate(): Promise&lt;Captcha&gt;</span>
+            </div>
+            <p>Generiert ein neues Captcha.</p>
+
+            <div class="method-signature">
+                <span class="method-name">validate(params: ValidateCaptchaParams): Promise&lt;ValidateResponse&gt;</span>
+            </div>
+            <p>Validiert eine Captcha-Eingabe.</p>
+        </div>
+
+        <div class="section" id="response-types">
+            <h2>Response-Typen</h2>
+            
+            <p>Das SDK gibt direkt die Daten aus der API zurück, ohne Wrapper-Objekte.</p>
+
+            <div class="alert alert-info">
+                <strong>Wichtig:</strong> Alle Service-Methoden geben direkt die Daten zurück (z.B. <code>LigaList</code> statt <code>Response&lt;LigaList&gt;</code>).
+            </div>
+
+            <h3>Beispiel</h3>
+            <div class="code-block">
+                <pre>// Vorher (mit Response-Wrapper)
+const response = await sdk.wam.getLigaList(params);
+const ligaList = response.data;
+
+// Jetzt (direkte Daten-Rückgabe)
+const ligaList = await sdk.wam.getLigaList(params);
+// ligaList ist direkt vom Typ LigaList</pre>
+            </div>
+        </div>
+
+        <div class="section" id="model-types">
+            <h2>Model-Typen</h2>
+            
+            <h3>LigaList</h3>
+            <div class="code-block">
+                <pre>interface LigaList {
+    competitions: CompetitionDesc[];
+    metadata: {
+        totalCount: number;
+        hasMore: boolean;
+    };
+}</pre>
+            </div>
+
+            <h3>CompetitionDesc</h3>
+            <div class="code-block">
+                <pre>interface CompetitionDesc {
+    actualMatchDay: Spieltag;
+    akName: string;
+    bezirkName: string;
+    bezirknr: string;
+    crossTableExists: boolean;
+    geschlecht: string;
+    geschlechtId: number;
+    kreisname: string;
+    kreisnr: string;
+    ligaId: number;
+    liganame: string;
+    liganr: string;
+    seasonId: number;
+    seasonName: string;
+    skEbeneId: number;
+    skEbeneName: string;
+    skName: string;
+    skNameSmall: string;
+    statisticType: string;
+    tableExists: boolean;
+    verbandId: number;
+    verbandName: string;
+    vorabliga: boolean;
+}</pre>
+            </div>
+
+            <h3>CompetitionModel</h3>
+            <div class="code-block">
+                <pre>interface CompetitionModel {
+    competition: CompetitionDesc;
+    matches?: MatchModel[];
+    table?: TableEntry[];
+    crossTable?: CrossTableEntry[];
+    teamStatistics?: TeamStatistic[];
+}</pre>
+            </div>
+
+            <h3>MatchModel</h3>
+            <div class="code-block">
+                <pre>interface MatchModel {
+    id: number;
+    homeTeam: TeamModel;
+    awayTeam: TeamModel;
+    competition: CompetitionDesc;
+    matchDate: string;
+    matchTime: string;
+    location: string;
+    status: string;
+    homeScore?: number;
+    awayScore?: number;
+    matchDay?: number;
+    referee?: string;
+    spectators?: number;
+    boxscore?: BoxScore;
+    playByPlay?: PlayByPlayEntry[];
+}</pre>
+            </div>
+
+            <h3>ClubModel</h3>
+            <div class="code-block">
+                <pre>interface ClubModel {
+    kontaktData: KontaktData;
+    vereinId: number;
+    vereinsname: string;
+    vereinsnummer: string;
+}</pre>
+            </div>
+
+            <h3>TeamModel</h3>
+            <div class="code-block">
+                <pre>interface TeamModel {
+    id: number;
+    name: string;
+    club: ClubModel;
+    season: string;
+}</pre>
+            </div>
+
+            <h3>LoginModel</h3>
+            <div class="code-block">
+                <pre>interface LoginModel {
+    userId?: number;
+    username?: string;
+    roles?: string[];
+    permissions?: string[];
+    isLoggedIn: boolean;
+}</pre>
+            </div>
+
+            <h3>Captcha</h3>
+            <div class="code-block">
+                <pre>interface Captcha {
+    captchaCode: string;
+    captchaImgSrc: string;
+    captchaKeyId: number;
+    captchaToken: string;
+}</pre>
+            </div>
+        </div>
+
+        <div class="section" id="parameter-types">
+            <h2>Parameter-Typen</h2>
+            
+            <h3>LigaListParams</h3>
+            <div class="code-block">
+                <pre>interface LigaListParams {
+    akgGeschlechtIds: string[];
+    altersklasseIds: number[];
+    gebietIds: number[];
+    ligatypIds: number[];
+    sortBy: number;
+    spielklasseIds: number[];
+    token: string;
+    verbandIds: number[];
+    startAtIndex?: number;
+}</pre>
+            </div>
+
+            <h3>SearchClubParams</h3>
+            <div class="code-block">
+                <pre>interface SearchClubParams {
+    akjIdList: number[];
+    eIdList: number[];
+    gIdList: number[];
+    plz: string;
+    startAtIndex: number;
+    umkreis: number;
+}</pre>
+            </div>
+
+            <h3>SearchMatchParams</h3>
+            <div class="code-block">
+                <pre>interface SearchMatchParams {
+    akGruppeIdList: number[];
+    fromDate: Date | string;
+    gIdList: number[];
+    spielfeldPlz: string;
+    spielfeldUmkreis: number;
+    startAtIndex: number;
+    toDate: Date | string;
+}</pre>
+            </div>
+
+            <h3>ClubFreetextParams</h3>
+            <div class="code-block">
+                <pre>interface ClubFreetextParams {
+    freetext: string;
+}</pre>
+            </div>
+
+            <h3>ClubActualMatchesParams</h3>
+            <div class="code-block">
+                <pre>interface ClubActualMatchesParams {
+    clubId: number;
+    justHome?: boolean;
+    rangeDays?: number;
+}</pre>
+            </div>
+
+            <h3>MatchInfoParams</h3>
+            <div class="code-block">
+                <pre>interface MatchInfoParams {
+    matchId: number;
+}</pre>
+            </div>
+
+            <h3>CompetitionSpielplanParams</h3>
+            <div class="code-block">
+                <pre>interface CompetitionSpielplanParams {
+    competitionId: number;
+}</pre>
+            </div>
+
+            <h3>CompetitionLigaListParams</h3>
+            <div class="code-block">
+                <pre>interface CompetitionLigaListParams {
+    competitionIds: number[];
+}</pre>
+            </div>
+
+            <h3>CompetitionActualParams</h3>
+            <div class="code-block">
+                <pre>interface CompetitionActualParams {
+    competitionId: number;
+    anzahlTage: number;
+}</pre>
+            </div>
+
+            <h3>CompetitionTabelleParams</h3>
+            <div class="code-block">
+                <pre>interface CompetitionTabelleParams {
+    competitionId: number;
+}</pre>
+            </div>
+
+            <h3>TeamMatchesParams</h3>
+            <div class="code-block">
+                <pre>interface TeamMatchesParams {
+    teamId: number;
+    justHome?: boolean;
+}</pre>
+            </div>
+
+            <h3>RegistrationInfoParams</h3>
+            <div class="code-block">
+                <pre>interface RegistrationInfoParams {
+    type: string;
+    registrationId: number;
+    signature: string;
+}</pre>
+            </div>
+
+            <h3>InvitePlayerParams</h3>
+            <div class="code-block">
+                <pre>interface InvitePlayerParams {
+    captcha: {
+        captchaCode: string;
+        captchaImgSrc: string;
+        captchaKeyId: number;
+        captchaToken: string;
+    };
+    invitationData: {
+        firstName: string;
+        lastName: string;
+        email: string;
+        dateOfBirth: string;
+        gender: number;
+        dataProtectionAccepted: boolean;
+        emailParent?: string;
+        firstNameParent?: string;
+        lastNameParent?: string;
+        nationality: { label: Record<string, any>; value: Record<string, any> };
+        nationality2?: { label: Record<string, any>; value: Record<string, any> };
+        reqistrationId: number;
+        underage: boolean;
+    };
+}</pre>
+            </div>
+        </div>
+
+        <div class="section" id="basic-usage">
+            <h2>Grundlegende Nutzung</h2>
+            
+            <div class="example">
+                <h5>SDK initialisieren und Liga-Liste abrufen</h5>
+                <div class="code-block">
+                    <pre>import { BasketballBundSDK } from 'basketball-bund-sdk';
+
+const sdk = new BasketballBundSDK({
+    baseUrl: 'https://www.basketball-bund.net/rest'
+});
+
+// Authentifizierung
+await sdk.authenticate('username', 'password');
+
+// Liga-Liste abrufen
+const ligaList = await sdk.wam.getLigaList({
+    akgGeschlechtIds: ['1'],
+    altersklasseIds: [1],
+    gebietIds: [1],
+    ligatypIds: [1],
+    sortBy: 1,
+    spielklasseIds: [1],
+    token: 'your-token',
+    verbandIds: [1]
+});
+
+console.log('Gefundene Ligen:', ligaList.ligen.length);
+console.log('Weitere Daten verfügbar:', ligaList.hasMoreData);</pre>
+                </div>
+            </div>
+
+            <div class="example">
+                <h5>Vereinssuche durchführen</h5>
+                <div class="code-block">
+                    <pre>// Vereine nach Namen suchen
+const clubResults = await sdk.club.searchClub({
+    name: 'Basketball',
+    plz: '12345'
+});
+
+console.log('Gefundene Vereine:', clubResults.clubs.length);
+
+// Details zu einem Verein abrufen
+if (clubResults.clubs.length > 0) {
+    const clubDetails = await sdk.club.getClubDetails({
+        clubId: clubResults.clubs[0].id
+    });
+    console.log('Vereinsname:', clubDetails.name);
+}</pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="authentication-examples">
+            <h2>Authentifizierungsbeispiele</h2>
+            
+            <div class="example">
+                <h5>Automatische Authentifizierung beim Initialisieren</h5>
+                <div class="code-block">
+                    <pre>const sdk = new BasketballBundSDK({
+    username: 'your-username',
+    password: 'your-password'
+});
+
+// SDK ist automatisch authentifiziert
+const isLoggedIn = await sdk.isAuthenticated();
+console.log('Eingeloggt:', isLoggedIn);</pre>
+                </div>
+            </div>
+
+            <div class="example">
+                <h5>Manuelle Authentifizierung</h5>
+                <div class="code-block">
+                    <pre>const sdk = new BasketballBundSDK();
+
+// Login durchführen
+const loginSuccess = await sdk.authenticate('username', 'password');
+if (loginSuccess) {
+    console.log('Login erfolgreich');
+    
+    // Status überprüfen
+    const isLoggedIn = await sdk.isAuthenticated();
+    console.log('Eingeloggt:', isLoggedIn);
+    
+    // Benutzerkontext abrufen
+    const userContext = await sdk.user.getUserContext();
+    console.log('Benutzer:', userContext.username);
+} else {
+    console.log('Login fehlgeschlagen');
+}</pre>
+                </div>
+            </div>
+
+            <div class="example">
+                <h5>Logout durchführen</h5>
+                <div class="code-block">
+                    <pre>// Benutzer abmelden
+await sdk.auth.logout();
+
+// Status überprüfen
+const isLoggedIn = await sdk.isAuthenticated();
+console.log('Eingeloggt:', isLoggedIn); // false</pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="advanced-examples">
+            <h2>Erweiterte Beispiele</h2>
+            
+            <div class="example">
+                <h5>Spielplan und Tabelle abrufen</h5>
+                <div class="code-block">
+                    <pre>// Liga-Details abrufen
+const ligaDetails = await sdk.wam.getLigaDetails({
+    ligaId: 12345
+});
+
+// Spielplan abrufen
+const spielplan = await sdk.wam.getSpielplan({
+    ligaId: 12345,
+    startAtIndex: 0
+});
+
+console.log('Anzahl Spiele:', spielplan.spiele.length);
+
+// Tabelle abrufen
+const tabelle = await sdk.wam.getTabelle({
+    ligaId: 12345
+});
+
+console.log('Anzahl Teams in Tabelle:', tabelle.teams.length);</pre>
+                </div>
+            </div>
+
+            <div class="example">
+                <h5>Captcha für Registrierung verwenden</h5>
+                <div class="code-block">
+                    <pre>// Captcha generieren
+const captcha = await sdk.captcha.generate();
+console.log('Captcha Code:', captcha.captchaCode);
+
+// Benutzer registrieren
+const registerResult = await sdk.registration.registerUser({
+    username: 'newuser',
+    email: 'user@example.com',
+    password: 'securepassword',
+    captchaCode: captcha.captchaCode,
+    captchaId: captcha.id
+});
+
+if (registerResult.success) {
+    console.log('Registrierung erfolgreich');
+}</pre>
+                </div>
+            </div>
+
+            <div class="example">
+                <h5>Fehlerbehandlung</h5>
+                <div class="code-block">
+                    <pre>try {
+    const ligaList = await sdk.wam.getLigaList(params);
+    console.log('Erfolgreich abgerufen');
+} catch (error) {
+    if (error.status === 401) {
+        console.log('Nicht authentifiziert - Login erforderlich');
+        await sdk.authenticate('username', 'password');
+        // Erneut versuchen
+        const ligaList = await sdk.wam.getLigaList(params);
+    } else if (error.status === 404) {
+        console.log('Ressource nicht gefunden');
+    } else {
+        console.log('Fehler:', error.message);
+    }
+}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scrolling für Navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Aktive Navigation hervorheben
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('.section');
+            const navItems = document.querySelectorAll('.nav-item');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('href') === `#${current}`) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Mobile Navigation Toggle
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('open');
+        }
+
+        // Schließe Sidebar bei Klick außerhalb (mobile)
+        document.addEventListener('click', (e) => {
+            const sidebar = document.getElementById('sidebar');
+            const mobileToggle = document.querySelector('.mobile-toggle');
+            
+            if (window.innerWidth <= 768 && 
+                !sidebar.contains(e.target) && 
+                !mobileToggle.contains(e.target)) {
+                sidebar.classList.remove('open');
+            }
+        });
+    </script>
+</body>
+</html> 

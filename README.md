@@ -2,7 +2,7 @@
 
 Ein TypeScript/JavaScript SDK für die Basketball-Bund.net REST API.
 
-📖 **[Vollständige Dokumentation auf GitHub Pages](https://drutschmann.github.io/team-sl-sdk/)**
+📖 **[Vollständige Dokumentation auf GitHub Pages](https://dirkdrutschmann.github.io/basketball-bund-sdk/)**
 
 ## Installation
 
@@ -13,6 +13,7 @@ npm install github.com:dirkdrutschmann/basketball-bund-sdk
 ## Schnellstart
 
 ### ES6 Modules (empfohlen)
+
 ```javascript
 import BasketballBundSDK from 'basketball-bund-sdk';
 
@@ -29,6 +30,7 @@ if (clubsResponse.success && clubsResponse.data) {
 ```
 
 ### CommonJS (Node.js)
+
 ```javascript
 const { default: BasketballBundSDK } = require('basketball-bund-sdk/cjs');
 
@@ -45,6 +47,7 @@ if (competitionResponse.success && competitionResponse.data) {
 ```
 
 ### TypeScript (mit vollständiger Typisierung)
+
 ```typescript
 import BasketballBundSDK from 'basketball-bund-sdk';
 
@@ -76,6 +79,7 @@ if (userContextResponse.success && userContextResponse.data) {
 ```
 
 ### 🔐 Authentifizierung
+
 ```typescript
 import BasketballBundSDK from 'basketball-bund-sdk';
 
@@ -159,7 +163,7 @@ const wamData = await sdk.wam.getLigaList(params);
 console.log(wamData.ligen); // Direkter Zugriff auf die eigentlichen Daten
 ```
 
-### Beispiel für direkte Daten-Rückgabe:
+### Beispiel für direkte Daten-Rückgabe
 
 ```typescript
 // Captcha Service - Direkte Captcha-Daten
@@ -256,6 +260,7 @@ if (isAuthenticated) {
 ```
 
 **Vorteile:**
+
 - ✅ Echte API-Prüfung statt nur Cookie-Prüfung
 - ✅ Zuverlässigere Authentifizierungsprüfung
 - ✅ Erkennt abgelaufene Sessions

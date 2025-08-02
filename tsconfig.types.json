@@ -1,12 +1,10 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "outDir": "./dist/cjs",
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "declaration": false
+    "module": "ES2020",
+    "outDir": "./dist/types",
+    "emitDeclarationOnly": true,
+    "declaration": true
   },
   "include": [
     "src/index.ts",

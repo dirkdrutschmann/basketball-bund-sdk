@@ -23,10 +23,16 @@
     "exactOptionalPropertyTypes": false
   },
   "include": [
-    "src/**/*"
+    "src/index.ts",
+    "src/auth/**/*",
+    "src/http/**/*",
+    "src/services/**/*",
+    "src/types/**/*"
   ],
   "exclude": [
     "node_modules",
-    "dist"
+    "dist",
+    "**/*.test.ts",
+    "**/*.spec.ts"
   ]
 } 

@@ -1,9 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-// Funktion zum Hinzufügen von .js-Erweiterungen zu Imports
 function addJsExtensions(content) {
-  // Füge .js zu relativen Imports hinzu (nur für import/from statements)
   return content
     .replace(/from ['"](\.[^'"]+)['"]/g, (match, importPath) => {
       if (importPath.endsWith('.js')) return match;
@@ -13,14 +11,11 @@ function addJsExtensions(content) {
       if (importPath.endsWith('.js')) return match;
       return `import '${importPath}.js'`;
     })
-    // Korrigiere export * statements zurück
     .replace(/export \* from ['"](\.[^'"]+)\.js['"]/g, (match, importPath) => {
       return `export * from '${importPath}'`;
     })
-    // Füge .js zu export * statements hinzu
     .replace(/export \* from ['"](\.[^'"]+)['"]/g, (match, importPath) => {
       if (importPath.endsWith('.js')) return match;
-      // Für Verzeichnisse, füge /index.js hinzu
       if (importPath.endsWith('/types') || importPath.endsWith('/services')) {
         return `export * from '${importPath}/index.js'`;
       }
@@ -28,18 +23,15 @@ function addJsExtensions(content) {
     });
 }
 
-// Funktion zum Verarbeiten einer Datei
 function processFile(filePath) {
   const content = fs.readFileSync(filePath, 'utf8');
   const updatedContent = addJsExtensions(content);
   fs.writeFileSync(filePath, updatedContent);
 }
 
-// Hauptfunktion
 function main() {
-  const distDir = path.join(process.cwd(), 'dist');
+  const distDir = path.join(process.cwd(), 'dist', 'esm');
   
-  // Verarbeite alle .js-Dateien im dist-Verzeichnis
   function processDirectory(dir) {
     const files = fs.readdirSync(dir);
     
